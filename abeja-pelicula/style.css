@@ -1,0 +1,1810 @@
+/* ======================================================
+   RESET
+====================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #17100a;
+}
+
+
+/* ======================================================
+   INTRO
+====================================================== */
+
+.intro {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #503719 0%,
+            #21150b 45%,
+            #080604 100%
+        );
+
+    color: white;
+
+    transition:
+        opacity 1s ease,
+        transform 1.2s ease;
+}
+
+.intro.hide {
+    opacity: 0;
+
+    transform:
+        scale(1.15);
+
+    pointer-events: none;
+}
+
+.intro-glow {
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,204,60,.18),
+            transparent 70%
+        );
+
+    filter: blur(10px);
+
+    animation:
+        introGlow 4s infinite alternate;
+}
+
+.intro-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: 90%;
+
+    max-width: 700px;
+
+    text-align: center;
+
+    animation:
+        introAppear 1.5s ease forwards;
+}
+
+.intro-small {
+    margin-bottom: 25px;
+
+    font-size: 11px;
+
+    letter-spacing: 7px;
+
+    color: #c9a65b;
+}
+
+.intro-bee {
+    font-size: 80px;
+
+    margin-bottom: 10px;
+
+    animation:
+        introBee 2s infinite ease-in-out;
+}
+
+.intro h1 {
+    font-size:
+        clamp(42px, 9vw, 90px);
+
+    letter-spacing:
+        clamp(4px, 1.5vw, 13px);
+
+    color: #ffd83d;
+
+    text-shadow:
+        0 0 30px rgba(255,211,50,.25);
+}
+
+.intro p {
+    margin-top: 15px;
+
+    color: #c7b8a0;
+
+    font-size: 17px;
+}
+
+#startBtn {
+    margin-top: 35px;
+
+    padding:
+        15px 35px;
+
+    border:
+        1px solid #d7b55f;
+
+    border-radius: 50px;
+
+    background:
+        rgba(255,220,100,.08);
+
+    color: #ffe59b;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    transition:
+        .3s ease;
+}
+
+#startBtn:hover {
+    background:
+        #ffd63b;
+
+    color:
+        #30200d;
+
+    transform:
+        scale(1.07);
+
+    box-shadow:
+        0 0 30px rgba(255,211,50,.3);
+}
+
+
+/* ======================================================
+   MOVIE
+====================================================== */
+
+.movie {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease;
+}
+
+.movie.active {
+    opacity: 1;
+}
+
+
+/* ======================================================
+   CIELO
+====================================================== */
+
+.sky {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f59d55 0%,
+            #ffd88b 35%,
+            #ffeab3 65%,
+            #b9d978 100%
+        );
+}
+
+
+/* ======================================================
+   SOL
+====================================================== */
+
+.sun {
+    position: absolute;
+
+    right: 13%;
+    top: 10%;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #fff7bc 0%,
+            #ffe680 45%,
+            #ffc94d 100%
+        );
+
+    box-shadow:
+        0 0 40px #ffe68c,
+        0 0 100px #ffd466;
+
+    animation:
+        sunPulse 5s infinite ease-in-out;
+}
+
+
+/* ======================================================
+   NUBES
+====================================================== */
+
+.cloud {
+    position: absolute;
+
+    width: 180px;
+    height: 45px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(255,255,255,.42);
+
+    filter:
+        blur(.5px);
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    border-radius: 50%;
+
+    background:
+        inherit;
+}
+
+.cloud::before {
+    left: 25px;
+
+    width: 75px;
+    height: 75px;
+}
+
+.cloud::after {
+    right: 20px;
+
+    width: 90px;
+    height: 90px;
+}
+
+.cloud-one {
+    left: -220px;
+    top: 18%;
+
+    animation:
+        cloudMove 45s linear infinite;
+}
+
+.cloud-two {
+    left: -300px;
+    top: 30%;
+
+    transform:
+        scale(.7);
+
+    opacity: .3;
+
+    animation:
+        cloudMove 65s linear infinite;
+}
+
+.cloud-three {
+    left: -400px;
+    top: 10%;
+
+    transform:
+        scale(.45);
+
+    opacity: .2;
+
+    animation:
+        cloudMove 80s linear infinite;
+}
+
+
+/* ======================================================
+   MONTAÑAS
+====================================================== */
+
+.mountains {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 22%;
+
+    height: 35%;
+
+    display: flex;
+
+    align-items: flex-end;
+}
+
+.mountains div {
+    width: 0;
+    height: 0;
+
+    border-left:
+        180px solid transparent;
+
+    border-right:
+        180px solid transparent;
+
+    border-bottom:
+        240px solid;
+}
+
+.mountains-back {
+    opacity: .25;
+}
+
+.mountains-back div {
+    border-bottom-color:
+        #746a59;
+}
+
+.mountains-front {
+    opacity: .42;
+}
+
+.mountains-front div {
+    border-bottom-color:
+        #536e4d;
+}
+
+
+/* ======================================================
+   CAMPO
+====================================================== */
+
+.movie::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 26%;
+
+    z-index: 3;
+
+    background:
+        linear-gradient(
+            #a7d160,
+            #51893c
+        );
+}
+
+.movie::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 25%;
+
+    height: 15px;
+
+    z-index: 4;
+
+    background:
+        repeating-linear-gradient(
+            100deg,
+            transparent 0 8px,
+            rgba(35,90,30,.4) 9px 11px
+        );
+}
+
+
+/* ======================================================
+   COLMENA
+====================================================== */
+
+.hive {
+    position: absolute;
+
+    left: 7%;
+    bottom: 25%;
+
+    z-index: 20;
+
+    width: 120px;
+}
+
+.hive-roof {
+    width: 145px;
+    height: 40px;
+
+    margin-left: -12px;
+
+    border-radius:
+        50% 50% 12px 12px;
+
+    background:
+        linear-gradient(
+            #b66a27,
+            #673714
+        );
+
+    border:
+        4px solid #603411;
+}
+
+.hive-body {
+    position: relative;
+
+    width: 120px;
+    height: 145px;
+
+    border:
+        5px solid #86501d;
+
+    border-radius:
+        15px 15px 30px 30px;
+
+    overflow: hidden;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            #e8a637 0 25px,
+            #f5c74d 25px 50px
+        );
+
+    box-shadow:
+        0 20px 25px rgba(50,30,10,.2);
+}
+
+.hive-stripe {
+    width: 100%;
+    height: 25px;
+
+    border-top:
+        2px solid rgba(100,50,10,.25);
+}
+
+.hive-door {
+    position: absolute;
+
+    left: 36px;
+    bottom: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius:
+        50% 50% 0 0;
+
+    background:
+        #382015;
+}
+
+
+/* ======================================================
+   ABEJA
+====================================================== */
+
+.bee {
+    position: absolute;
+
+    left: 17%;
+    bottom: 48%;
+
+    width: 120px;
+    height: 100px;
+
+    z-index: 50;
+
+    transition:
+        left 1.8s cubic-bezier(.2,.8,.2,1),
+        bottom 1.8s cubic-bezier(.2,.8,.2,1);
+}
+
+.bee-body {
+    position: absolute;
+
+    left: 30px;
+    top: 32px;
+
+    width: 75px;
+    height: 48px;
+
+    border:
+        3px solid #23190c;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background:
+        #ffc928;
+}
+
+.bee-stripe {
+    position: absolute;
+
+    top: 0;
+
+    width: 12px;
+    height: 100%;
+
+    background:
+        #17130d;
+}
+
+.bee-stripe:nth-child(1) {
+    left: 20px;
+}
+
+.bee-stripe:nth-child(2) {
+    left: 42px;
+}
+
+.bee-stripe:nth-child(3) {
+    left: 63px;
+}
+
+.bee-head {
+    position: absolute;
+
+    left: 3px;
+    top: 38px;
+
+    width: 38px;
+    height: 38px;
+
+    border:
+        3px solid #261a0b;
+
+    border-radius: 50%;
+
+    background:
+        #eebd34;
+}
+
+.bee-eye {
+    position: absolute;
+
+    top: 8px;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #111;
+}
+
+.eye-left {
+    left: 7px;
+}
+
+.eye-right {
+    right: 7px;
+}
+
+.bee-mouth {
+    position: absolute;
+
+    left: 11px;
+    top: 19px;
+
+    width: 13px;
+    height: 7px;
+
+    border-bottom:
+        2px solid #39200b;
+
+    border-radius: 50%;
+}
+
+.bee-wing {
+    position: absolute;
+
+    width: 55px;
+    height: 35px;
+
+    border:
+        2px solid rgba(70,100,120,.25);
+
+    border-radius:
+        70% 30% 70% 30%;
+
+    background:
+        rgba(255,255,255,.62);
+
+    animation:
+        wingFlap .13s infinite alternate;
+}
+
+.bee-wing-left {
+    left: 32px;
+    top: 2px;
+
+    transform:
+        rotate(-30deg);
+}
+
+.bee-wing-right {
+    left: 62px;
+    top: -2px;
+
+    transform:
+        rotate(30deg);
+}
+
+.antenna {
+    position: absolute;
+
+    width: 22px;
+    height: 2px;
+
+    background: #291c0b;
+
+    transform-origin:
+        left center;
+}
+
+.antenna-left {
+    left: 5px;
+    top: 40px;
+
+    transform:
+        rotate(-35deg);
+}
+
+.antenna-right {
+    left: 5px;
+    top: 61px;
+
+    transform:
+        rotate(15deg);
+}
+
+
+/* ======================================================
+   MIEL
+====================================================== */
+
+.honey {
+    position: absolute;
+
+    left: 48%;
+    bottom: 24%;
+
+    width: 150px;
+    height: 190px;
+
+    z-index: 30;
+
+    opacity: 0;
+
+    transform:
+        translateY(60px)
+        scale(.7);
+
+    transition:
+        1s ease;
+}
+
+.honey.show {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.honey-glow {
+    position: absolute;
+
+    inset: -50px;
+
+    border-radius: 50%;
+
+    background:
+        #ffd32f;
+
+    filter:
+        blur(45px);
+
+    opacity: .45;
+
+    animation:
+        honeyGlow 2s infinite alternate;
+}
+
+.honey-lid {
+    position: absolute;
+
+    left: 20px;
+    top: 0;
+
+    width: 110px;
+    height: 30px;
+
+    z-index: 3;
+
+    border:
+        4px solid #5f3412;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            #d9952d,
+            #743e14
+        );
+}
+
+.honey-jar {
+    position: absolute;
+
+    top: 25px;
+
+    width: 150px;
+    height: 165px;
+
+    overflow: hidden;
+
+    border:
+        4px solid #a56c1c;
+
+    border-radius:
+        25px 25px 35px 35px;
+
+    background:
+        #f4b914;
+
+    box-shadow:
+        0 20px 35px rgba(80,50,0,.2);
+}
+
+.honey-liquid {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            #ffd83b,
+            #e89b00
+        );
+}
+
+.honey-liquid span {
+    position: absolute;
+
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,242,140,.75);
+
+    animation:
+        honeyBubble 1.7s infinite alternate;
+}
+
+.honey-liquid span:nth-child(1) {
+    left: 30px;
+    top: 35px;
+}
+
+.honey-liquid span:nth-child(2) {
+    left: 95px;
+    top: 75px;
+}
+
+.honey-liquid span:nth-child(3) {
+    left: 55px;
+    top: 125px;
+}
+
+.honey-label {
+    position: absolute;
+
+    left: 25px;
+    top: 50px;
+
+    width: 100px;
+    height: 75px;
+
+    z-index: 4;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        2px solid #c48d2a;
+
+    border-radius: 10px;
+
+    background:
+        #fff5cf;
+
+    color:
+        #6d3e13;
+}
+
+.honey-icon {
+    font-size: 17px;
+}
+
+.honey-label strong {
+    font-size: 20px;
+}
+
+.honey-label small {
+    font-size: 7px;
+
+    letter-spacing: 1px;
+}
+
+.jar-shine {
+    position: absolute;
+
+    left: 18px;
+    top: 35px;
+
+    width: 16px;
+    height: 100px;
+
+    z-index: 5;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.65);
+
+    filter:
+        blur(2px);
+
+    transform:
+        rotate(8deg);
+}
+
+
+/* ======================================================
+   MOSCA
+====================================================== */
+
+.fly {
+    position: absolute;
+
+    right: 12%;
+    bottom: 47%;
+
+    width: 110px;
+    height: 110px;
+
+    z-index: 60;
+
+    animation:
+        flyFloat 1.2s infinite ease-in-out;
+
+    transition:
+        right 1.8s cubic-bezier(.2,.8,.2,1),
+        bottom 1.8s cubic-bezier(.2,.8,.2,1);
+}
+
+.fly-body {
+    position: absolute;
+
+    left: 30px;
+    top: 30px;
+
+    width: 55px;
+    height: 75px;
+
+    border:
+        3px solid #24202b;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #292530,
+            #777182,
+            #292530
+        );
+}
+
+.fly-head {
+    position: absolute;
+
+    left: 7px;
+    top: -22px;
+
+    width: 38px;
+    height: 38px;
+
+    border:
+        3px solid #24202b;
+
+    border-radius: 50%;
+
+    background:
+        #423647;
+}
+
+.fly-eye {
+    position: absolute;
+
+    top: 10px;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background:
+        #ff4141;
+}
+
+.fly-eye:first-child {
+    left: 3px;
+}
+
+.fly-eye:last-child {
+    right: 3px;
+}
+
+.fly-stripe {
+    position: absolute;
+
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background:
+        rgba(20,18,25,.5);
+}
+
+.fly-stripe:first-of-type {
+    top: 30px;
+}
+
+.fly-stripe:last-of-type {
+    top: 48px;
+}
+
+.fly-wing {
+    position: absolute;
+
+    width: 65px;
+    height: 40px;
+
+    border:
+        2px solid rgba(50,100,140,.3);
+
+    border-radius:
+        80% 20% 80% 20%;
+
+    background:
+        rgba(190,230,255,.55);
+
+    animation:
+        flyWing .1s infinite alternate;
+}
+
+.fly-wing-left {
+    left: -5px;
+    top: 28px;
+
+    transform:
+        rotate(-30deg);
+}
+
+.fly-wing-right {
+    left: 48px;
+    top: 20px;
+
+    transform:
+        rotate(35deg);
+}
+
+
+/* ======================================================
+   💩
+====================================================== */
+
+.poop {
+    position: absolute;
+
+    right: 8%;
+    bottom: 25%;
+
+    z-index: 35;
+
+    font-size: 90px;
+
+    opacity: 0;
+
+    transform:
+        scale(0)
+        rotate(-30deg);
+}
+
+.poop.show {
+    animation:
+        poopAppear .8s forwards;
+}
+
+.poop-face {
+    position: absolute;
+
+    left: 35px;
+    top: 20px;
+
+    font-size: 18px;
+}
+
+
+/* ======================================================
+   BURBUJAS
+====================================================== */
+
+.bubble {
+    position: absolute;
+
+    z-index: 80;
+
+    opacity: 0;
+
+    font-size: 25px;
+}
+
+.bubble-one {
+    right: 9%;
+    bottom: 45%;
+}
+
+.bubble-two {
+    right: 13%;
+    bottom: 50%;
+}
+
+.bubble-three {
+    right: 17%;
+    bottom: 42%;
+}
+
+.bubble.active {
+    animation:
+        bubblePop 1.5s forwards;
+}
+
+
+/* ======================================================
+   TEXTO ESCENA
+====================================================== */
+
+.scene-text {
+    position: absolute;
+
+    top: 12%;
+    left: 50%;
+
+    z-index: 100;
+
+    width: 90%;
+
+    transform:
+        translateX(-50%);
+
+    text-align: center;
+
+    color: white;
+
+    font-size:
+        clamp(18px, 3vw, 32px);
+
+    font-weight: 900;
+
+    text-shadow:
+        0 3px 15px rgba(0,0,0,.55);
+
+    opacity: 0;
+
+    transition:
+        opacity .5s ease;
+}
+
+.scene-text.show {
+    opacity: 1;
+}
+
+
+/* ======================================================
+   FRASE PRINCIPAL
+====================================================== */
+
+.quote {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    z-index: 150;
+
+    width:
+        min(1000px, 94vw);
+
+    transform:
+        translate(-50%, -50%);
+
+    text-align: center;
+
+    color: white;
+
+    font-weight: 1000;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    text-shadow:
+        0 4px 0 rgba(80,45,15,.7),
+        0 8px 25px rgba(0,0,0,.45);
+
+    transition:
+        opacity .6s ease;
+}
+
+.quote.show {
+    opacity: 1;
+}
+
+.quote-line {
+    display: block;
+
+    margin:
+        6px 0;
+
+    font-size:
+        clamp(22px, 4.5vw, 62px);
+
+    line-height: 1.05;
+
+    opacity: 0;
+
+    transform:
+        translateY(30px)
+        scale(.8);
+}
+
+.quote.show .quote-line {
+    animation:
+        quoteLine .7s forwards;
+}
+
+.quote.show .line-one {
+    animation-delay: .15s;
+}
+
+.quote.show .line-two {
+    animation-delay: .65s;
+}
+
+.quote.show .line-three {
+    animation-delay: 1.15s;
+}
+
+.quote.show .line-four {
+    animation-delay: 1.65s;
+}
+
+.quote.show .line-five {
+    animation-delay: 2.15s;
+}
+
+.line-four span {
+    color:
+        #ffd52e;
+
+    text-shadow:
+        0 0 20px rgba(255,210,40,.7),
+        0 4px 0 #875510;
+}
+
+.line-five strong {
+    color:
+        #713d22;
+
+    text-shadow:
+        0 4px 0 #351b0e,
+        0 0 20px rgba(80,30,10,.3);
+}
+
+
+/* ======================================================
+   FINAL
+====================================================== */
+
+.ending {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 250;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(20,12,5,.55);
+
+    backdrop-filter:
+        blur(8px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 1s ease;
+}
+
+.ending.show {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+.ending-card {
+    width:
+        min(700px, 94vw);
+
+    padding:
+        clamp(25px, 5vw, 50px);
+
+    text-align: center;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,247,218,.95);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.4);
+
+    transform:
+        scale(.8)
+        translateY(30px);
+
+    transition:
+        transform 1s ease;
+}
+
+.ending.show .ending-card {
+    transform:
+        scale(1)
+        translateY(0);
+}
+
+.ending-bee {
+    font-size: 65px;
+
+    animation:
+        introBee 2s infinite ease-in-out;
+}
+
+.ending-card h2 {
+    margin-top: 10px;
+
+    font-size:
+        clamp(32px, 6vw, 60px);
+
+    color:
+        #633714;
+}
+
+.ending-card p {
+    margin-top: 8px;
+
+    font-size:
+        clamp(15px, 2.5vw, 20px);
+
+    color:
+        #795c3c;
+}
+
+.ending-final {
+    margin-top: 25px;
+
+    font-size:
+        clamp(20px, 4vw, 35px);
+
+    font-weight: 900;
+
+    line-height: 1.25;
+
+    color:
+        #4d321e;
+}
+
+.ending-final span {
+    color:
+        #e6a800;
+}
+
+.ending-final strong {
+    color:
+        #713d22;
+}
+
+#replayBtn {
+    margin-top: 30px;
+
+    padding:
+        13px 28px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background:
+        #302218;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition:
+        .3s;
+}
+
+#replayBtn:hover {
+    transform:
+        scale(1.08);
+
+    background:
+        #5d3b20;
+}
+
+
+/* ======================================================
+   CONTROLES
+====================================================== */
+
+.sound-button,
+.skip-button {
+    position: absolute;
+
+    z-index: 300;
+
+    border:
+        1px solid rgba(255,255,255,.45);
+
+    background:
+        rgba(0,0,0,.2);
+
+    color: white;
+
+    cursor: pointer;
+
+    backdrop-filter:
+        blur(5px);
+}
+
+.sound-button {
+    top: 20px;
+    right: 20px;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+.skip-button {
+    right: 20px;
+    bottom: 35px;
+
+    padding:
+        9px 15px;
+
+    border-radius: 30px;
+}
+
+.progress {
+    position: absolute;
+
+    left: 5%;
+    right: 5%;
+    bottom: 15px;
+
+    z-index: 300;
+
+    height: 3px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255,255,255,.25);
+}
+
+#progressBar {
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        #fff0a3;
+
+    transition:
+        width .3s linear;
+}
+
+
+/* ======================================================
+   PARTÍCULAS
+====================================================== */
+
+.particle {
+    position: absolute;
+
+    z-index: 10;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,244,160,.8);
+
+    box-shadow:
+        0 0 10px white;
+
+    pointer-events: none;
+}
+
+
+/* ======================================================
+   ANIMACIONES
+====================================================== */
+
+@keyframes introAppear {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes introBee {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-5deg);
+    }
+
+    50% {
+        transform:
+            translateY(-12px)
+            rotate(5deg);
+    }
+}
+
+@keyframes introGlow {
+    from {
+        transform:
+            scale(.8);
+
+        opacity: .5;
+    }
+
+    to {
+        transform:
+            scale(1.2);
+
+        opacity: 1;
+    }
+}
+
+@keyframes sunPulse {
+    0%,
+    100% {
+        transform:
+            scale(1);
+    }
+
+    50% {
+        transform:
+            scale(1.08);
+    }
+}
+
+@keyframes cloudMove {
+    from {
+        margin-left: 0;
+    }
+
+    to {
+        margin-left: 150vw;
+    }
+}
+
+@keyframes wingFlap {
+    from {
+        transform:
+            scaleY(1);
+    }
+
+    to {
+        transform:
+            scaleY(.25);
+    }
+}
+
+@keyframes flyWing {
+    from {
+        transform:
+            scaleY(1);
+    }
+
+    to {
+        transform:
+            scaleY(.2);
+    }
+}
+
+@keyframes flyFloat {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-3deg);
+    }
+
+    50% {
+        transform:
+            translateY(-12px)
+            rotate(4deg);
+    }
+}
+
+@keyframes honeyGlow {
+    from {
+        opacity: .25;
+
+        transform:
+            scale(.9);
+    }
+
+    to {
+        opacity: .55;
+
+        transform:
+            scale(1.15);
+    }
+}
+
+@keyframes honeyBubble {
+    from {
+        transform:
+            scale(.7);
+    }
+
+    to {
+        transform:
+            scale(1.25);
+    }
+}
+
+@keyframes poopAppear {
+    0% {
+        opacity: 0;
+
+        transform:
+            scale(0)
+            rotate(-30deg);
+    }
+
+    70% {
+        opacity: 1;
+
+        transform:
+            scale(1.2)
+            rotate(10deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0);
+    }
+}
+
+@keyframes bubblePop {
+    0% {
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(.4);
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateY(-80px)
+            scale(1.2);
+    }
+}
+
+@keyframes quoteLine {
+    0% {
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(.8);
+    }
+
+    70% {
+        transform:
+            translateY(-5px)
+            scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* ======================================================
+   MÓVIL
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .intro h1 {
+        letter-spacing: 5px;
+    }
+
+    .intro-small {
+        letter-spacing: 3px;
+    }
+
+    .sun {
+        width: 90px;
+        height: 90px;
+
+        right: 5%;
+        top: 8%;
+    }
+
+    .hive {
+        transform:
+            scale(.7);
+
+        transform-origin:
+            bottom left;
+    }
+
+    .bee {
+        left: 10%;
+
+        transform:
+            scale(.75);
+    }
+
+    .honey {
+        left: 38%;
+
+        transform:
+            scale(.7);
+    }
+
+    .fly {
+        right: 0;
+
+        transform:
+            scale(.7);
+    }
+
+    .poop {
+        right: 0;
+
+        font-size: 65px;
+    }
+
+    .quote {
+        width: 95vw;
+    }
+
+    .quote-line {
+        font-size:
+            clamp(21px, 6vw, 35px);
+
+        margin: 5px 0;
+    }
+
+    .ending-card {
+        padding: 25px 18px;
+    }
+
+}
