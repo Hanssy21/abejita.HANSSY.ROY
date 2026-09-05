@@ -4,7 +4,8 @@
     padding:0;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
@@ -15,7 +16,9 @@ body{
     background:#17100a;
 }
 
-/* INTRO */
+/* =========================================================
+   INTRO
+========================================================= */
 
 .intro{
     position:fixed;
@@ -100,7 +103,10 @@ body{
     transform:scale(1.06);
 }
 
-/* MOVIE */
+
+/* =========================================================
+   MOVIE
+========================================================= */
 
 .movie{
     position:relative;
@@ -115,7 +121,10 @@ body{
     opacity:1;
 }
 
-/* SKY */
+
+/* =========================================================
+   CIELO
+========================================================= */
 
 .sky{
     position:absolute;
@@ -137,7 +146,9 @@ body{
     right:12%;
     border-radius:50%;
     background:#fff0a0;
-    box-shadow:0 0 50px #ffe477,0 0 120px #ffd45c;
+    box-shadow:
+        0 0 50px #ffe477,
+        0 0 120px #ffd45c;
     animation:sunPulse 5s infinite ease-in-out;
 }
 
@@ -184,7 +195,10 @@ body{
     animation:cloudMove 65s linear infinite;
 }
 
-/* MOUNTAINS */
+
+/* =========================================================
+   MONTAÑAS
+========================================================= */
 
 .mountains{
     position:absolute;
@@ -233,7 +247,10 @@ body{
     border-bottom:220px solid #486845;
 }
 
-/* FIELD */
+
+/* =========================================================
+   CAMPO
+========================================================= */
 
 .field{
     position:absolute;
@@ -241,35 +258,51 @@ body{
     bottom:0;
     width:100%;
     height:27%;
-    background:linear-gradient(#9bcb5b,#4e873b);
+    background:
+        linear-gradient(
+            #9bcb5b,
+            #4e873b
+        );
 }
 
-/* HIVE */
+
+/* =========================================================
+   COLMENA
+========================================================= */
 
 .hive{
     position:absolute;
     z-index:20;
-    left:6%;
-    bottom:25%;
-    width:110px;
+    left:5%;
+    bottom:24%;
+    width:115px;
+    filter:drop-shadow(0 12px 12px #0004);
 }
 
 .hive-roof{
-    height:35px;
-    width:130px;
+    height:38px;
+    width:135px;
     margin-left:-10px;
     border-radius:50% 50% 10px 10px;
-    background:linear-gradient(#bd762d,#683815);
+    background:
+        linear-gradient(
+            #d28734,
+            #6a3614
+        );
 }
 
 .hive-body{
-    height:135px;
+    height:140px;
     border:4px solid #774417;
     border-radius:15px 15px 30px 30px;
-    background:repeating-linear-gradient(
-        #f2b93c 0 23px,
-        #e29a29 23px 46px
-    );
+    background:
+        repeating-linear-gradient(
+            #f2b93c 0 23px,
+            #e29a29 23px 46px
+        );
+    box-shadow:
+        inset 0 0 20px #8a4c1033,
+        0 12px 20px #0004;
 }
 
 .door{
@@ -277,160 +310,411 @@ body{
     width:35px;
     height:35px;
     bottom:0;
-    left:37px;
+    left:40px;
     border-radius:50% 50% 0 0;
     background:#352015;
 }
 
-/* BEE */
+
+/* =========================================================
+   ABEJA REALISTA
+========================================================= */
 
 .bee{
     position:absolute;
     z-index:60;
-    left:16%;
-    bottom:48%;
-    width:110px;
-    height:90px;
+
+    /* POSICIÓN INICIAL */
+    left:15%;
+    bottom:47%;
+
+    width:135px;
+    height:105px;
+
     transition:
-        left 2.2s cubic-bezier(.22,.8,.2,1),
-        bottom 2.2s cubic-bezier(.22,.8,.2,1);
+        left 2.8s cubic-bezier(.16,.78,.25,1),
+        bottom 2.8s cubic-bezier(.16,.78,.25,1);
+
+    filter:
+        drop-shadow(0 8px 7px #0004);
+
+    transform-origin:center center;
+    animation:
+        beeHover 2.2s ease-in-out infinite;
 }
+
+
+/* CUERPO */
 
 .bee-body{
     position:absolute;
-    left:32px;
-    top:28px;
-    width:68px;
-    height:45px;
+    left:38px;
+    top:30px;
+
+    width:82px;
+    height:53px;
+
     border:3px solid #21170a;
-    border-radius:50%;
-    background:repeating-linear-gradient(
-        90deg,
-        #ffc928 0 17px,
-        #19140e 17px 27px
-    );
+    border-radius:55% 48% 50% 48%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #ffc928 0 18px,
+            #1b160e 18px 29px
+        );
+
+    box-shadow:
+        inset -8px -6px 12px #0004,
+        inset 5px 4px 10px #fff3;
 }
+
+
+/* PARTE TRASERA */
+
+.bee-body:after{
+    content:"";
+
+    position:absolute;
+
+    right:-11px;
+    top:13px;
+
+    width:17px;
+    height:27px;
+
+    border-radius:50%;
+
+    background:#1b160e;
+
+    transform:rotate(10deg);
+}
+
+
+/* CABEZA */
 
 .bee-head{
     position:absolute;
-    left:2px;
-    top:34px;
-    width:38px;
-    height:38px;
+
+    left:0;
+    top:37px;
+
+    width:45px;
+    height:45px;
+
     border:3px solid #21170a;
     border-radius:50%;
-    background:#eab52e;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffe36a,
+            #d89d20 75%
+        );
+
+    box-shadow:
+        inset -5px -5px 8px #0003;
 }
+
+
+/* OJOS */
 
 .bee-head span{
     position:absolute;
-    top:8px;
-    width:6px;
-    height:6px;
+
+    top:10px;
+
+    width:7px;
+    height:7px;
+
     border-radius:50%;
-    background:#111;
+
+    background:#080808;
+
+    box-shadow:
+        0 0 3px #fff4;
 }
 
-.bee-head span:first-child{left:7px}
-.bee-head span:nth-child(2){right:7px}
+.bee-head span:first-child{
+    left:8px;
+}
+
+.bee-head span:nth-child(2){
+    right:8px;
+}
+
+
+/* BOCA */
 
 .bee-head b{
     position:absolute;
-    width:12px;
-    height:6px;
-    left:11px;
-    top:20px;
+
+    width:14px;
+    height:7px;
+
+    left:13px;
+    top:24px;
+
     border-bottom:2px solid #32190b;
+
     border-radius:50%;
 }
+
+
+/* ANTENAS */
+
+.bee-head:before,
+.bee-head:after{
+    content:"";
+
+    position:absolute;
+
+    width:20px;
+    height:17px;
+
+    border-top:2px solid #21170a;
+
+    top:-11px;
+}
+
+.bee-head:before{
+    left:0;
+    transform:rotate(-28deg);
+}
+
+.bee-head:after{
+    right:0;
+    transform:rotate(28deg);
+}
+
+
+/* ALAS */
 
 .wing,
 .fly-wing{
     position:absolute;
-    width:52px;
-    height:34px;
-    border-radius:70% 30% 70% 30%;
-    background:#e9faff99;
-    border:2px solid #5c789055;
+
+    width:60px;
+    height:38px;
+
+    border-radius:
+        70% 30%
+        70% 30%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffffcc,
+            #d9f8ff77
+        );
+
+    border:2px solid #66889a77;
+
+    box-shadow:
+        0 2px 8px #ffffff44;
+
+    backdrop-filter:blur(2px);
 }
+
+
+/* ALA ABEJA 1 */
 
 .w1{
-    left:30px;
-    top:0;
-    transform:rotate(-25deg);
+    left:34px;
+    top:1px;
+
+    transform:rotate(-28deg);
+
+    animation:
+        beeWingLeft .13s infinite alternate;
 }
+
+
+/* ALA ABEJA 2 */
 
 .w2{
-    left:58px;
-    top:-3px;
-    transform:rotate(25deg);
+    left:65px;
+    top:-5px;
+
+    transform:rotate(27deg);
+
+    animation:
+        beeWingRight .13s infinite alternate;
 }
 
-.wing{
-    animation:wing .12s infinite alternate;
+
+/* MOVIMIENTO DE ABEJA */
+
+@keyframes beeHover{
+
+    0%{
+        transform:
+            translate3d(0,0,0)
+            rotate(-2deg);
+    }
+
+    25%{
+        transform:
+            translate3d(4px,-7px,0)
+            rotate(2deg);
+    }
+
+    50%{
+        transform:
+            translate3d(-2px,-11px,0)
+            rotate(-1deg);
+    }
+
+    75%{
+        transform:
+            translate3d(-5px,-5px,0)
+            rotate(3deg);
+    }
+
+    100%{
+        transform:
+            translate3d(0,0,0)
+            rotate(-2deg);
+    }
 }
 
-/* HONEY */
+@keyframes beeWingLeft{
+    from{
+        transform:
+            rotate(-28deg)
+            scaleY(1);
+    }
+
+    to{
+        transform:
+            rotate(-28deg)
+            scaleY(.25);
+    }
+}
+
+@keyframes beeWingRight{
+    from{
+        transform:
+            rotate(27deg)
+            scaleY(1);
+    }
+
+    to{
+        transform:
+            rotate(27deg)
+            scaleY(.25);
+    }
+}
+
+
+/* =========================================================
+   FRASCO DE MIEL
+========================================================= */
 
 .honey{
     position:absolute;
     z-index:30;
-    left:48%;
+
+    left:49%;
     bottom:23%;
-    width:130px;
-    height:165px;
+
+    width:140px;
+    height:175px;
+
     opacity:0;
-    transform:translateY(50px) scale(.8);
+
+    transform:
+        translateY(50px)
+        scale(.8);
+
     transition:1s ease;
+
+    filter:
+        drop-shadow(0 12px 15px #0004);
 }
 
 .honey.show{
     opacity:1;
-    transform:translateY(0) scale(1);
+
+    transform:
+        translateY(0)
+        scale(1);
 }
 
 .jar{
     position:absolute;
+
     inset:15px 0 0;
+
     border:4px solid #9b641a;
-    border-radius:22px 22px 30px 30px;
+
+    border-radius:
+        22px 22px
+        30px 30px;
+
     overflow:hidden;
-    background:linear-gradient(#ffd83c,#e89c00);
-    box-shadow:0 15px 30px #70440044;
+
+    background:
+        linear-gradient(
+            #ffd83c,
+            #e89c00
+        );
+
+    box-shadow:
+        0 15px 30px #70440044;
 }
 
 .jar:before{
     content:"";
+
     position:absolute;
-    left:15px;
+
+    left:18px;
     top:-15px;
-    width:92px;
+
+    width:98px;
     height:28px;
+
     border-radius:8px;
+
     background:#804715;
 }
 
 .honey-liquid{
     position:absolute;
     inset:0;
-    background:linear-gradient(#ffdc42,#e89c00);
+
+    background:
+        linear-gradient(
+            #ffdc42,
+            #e89c00
+        );
 }
 
 .label{
     position:absolute;
     z-index:3;
-    left:18px;
-    top:48px;
-    width:88px;
-    height:68px;
+
+    left:19px;
+    top:50px;
+
+    width:94px;
+    height:70px;
+
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
+
     text-align:center;
+
     border-radius:8px;
+
     background:#fff4cc;
     color:#704115;
+
+    box-shadow:
+        0 2px 5px #0002;
 }
 
 .label small{
@@ -440,131 +724,391 @@ body{
 .shine{
     position:absolute;
     z-index:4;
-    left:14px;
+
+    left:15px;
     top:35px;
-    width:13px;
-    height:95px;
+
+    width:14px;
+    height:105px;
+
     border-radius:50%;
+
     background:#fff9;
+
     filter:blur(2px);
 }
 
-/* FLY */
+
+/* =========================================================
+   MOSCA REALISTA
+========================================================= */
 
 .fly{
     position:absolute;
     z-index:70;
-    right:10%;
-    bottom:48%;
-    width:100px;
-    height:100px;
+
+    right:9%;
+    bottom:47%;
+
+    width:120px;
+    height:115px;
+
     transition:
-        right 2.4s cubic-bezier(.22,.8,.2,1),
-        bottom 2.4s cubic-bezier(.22,.8,.2,1);
-    animation:flyFloat 1.3s infinite ease-in-out;
+        right 3s cubic-bezier(.12,.72,.25,1),
+        bottom 3s cubic-bezier(.12,.72,.25,1);
+
+    filter:
+        drop-shadow(0 8px 8px #0005);
+
+    transform-origin:center;
+
+    animation:
+        flyHover 1.6s ease-in-out infinite;
 }
+
+
+/* CUERPO MOSCA */
 
 .fly-body{
     position:absolute;
-    left:28px;
-    top:25px;
-    width:52px;
-    height:70px;
+
+    left:34px;
+    top:30px;
+
+    width:60px;
+    height:76px;
+
     border:3px solid #27232b;
-    border-radius:50%;
-    background:linear-gradient(90deg,#29242f,#77727e,#29242f);
+
+    border-radius:52%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1d1920,
+            #77717e 45%,
+            #29242f 75%,
+            #17141a
+        );
+
+    box-shadow:
+        inset 5px 0 9px #fff3,
+        inset -7px 0 12px #0007;
 }
+
+
+/* BRILLO DEL CUERPO */
+
+.fly-body:after{
+    content:"";
+
+    position:absolute;
+
+    left:10px;
+    top:10px;
+
+    width:10px;
+    height:42px;
+
+    border-radius:50%;
+
+    background:#ffffff30;
+
+    filter:blur(2px);
+}
+
+
+/* CABEZA MOSCA */
 
 .fly-head{
     position:absolute;
-    left:6px;
-    top:-22px;
-    width:38px;
-    height:38px;
+
+    left:7px;
+    top:-25px;
+
+    width:46px;
+    height:46px;
+
     border-radius:50%;
-    background:#433649;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #76607f,
+            #342936 70%
+        );
+
     border:3px solid #24202a;
+
+    box-shadow:
+        inset -5px -5px 9px #0005;
 }
+
+
+/* OJOS ROJOS */
 
 .fly-head i{
     position:absolute;
-    top:9px;
-    width:11px;
-    height:11px;
+
+    top:11px;
+
+    width:13px;
+    height:13px;
+
     border-radius:50%;
-    background:#ff4545;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffb0a0,
+            #ff3131 55%,
+            #a60000
+        );
+
+    box-shadow:
+        0 0 5px #ff3030;
 }
 
-.fly-head i:first-child{left:3px}
-.fly-head i:last-child{right:3px}
+.fly-head i:first-child{
+    left:3px;
+}
+
+.fly-head i:last-child{
+    right:3px;
+}
+
+
+/* TÓRAX / RAYAS */
 
 .fly-body>b{
     position:absolute;
+
     left:0;
+
     width:100%;
     height:5px;
+
     background:#211d26aa;
+
+    border-radius:50%;
 }
 
-.fly-body>b:first-of-type{top:28px}
-.fly-body>b:last-of-type{top:46px}
+.fly-body>b:first-of-type{
+    top:30px;
+}
+
+.fly-body>b:last-of-type{
+    top:50px;
+}
+
+
+/* ALAS MOSCA */
 
 .fly-wing{
-    animation:wing .1s infinite alternate;
+    width:65px;
+    height:42px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffffbb,
+            #d7f7ff55
+        );
+
+    border-color:#526d7b66;
+
+    box-shadow:
+        0 0 10px #fff4;
 }
 
 .fw1{
-    left:-7px;
+    left:-5px;
     top:20px;
-    transform:rotate(-30deg);
+
+    transform:rotate(-31deg);
+
+    animation:
+        flyWingLeft .09s infinite alternate;
 }
 
 .fw2{
-    left:45px;
-    top:17px;
+    left:51px;
+    top:16px;
+
+    transform:rotate(31deg);
+
+    animation:
+        flyWingRight .09s infinite alternate;
+}
+
+
+/* ANTENAS MOSCA */
+
+.fly-head:before,
+.fly-head:after{
+    content:"";
+
+    position:absolute;
+
+    width:20px;
+    height:17px;
+
+    border-top:2px solid #28202d;
+
+    top:-11px;
+}
+
+.fly-head:before{
+    left:1px;
+    transform:rotate(-30deg);
+}
+
+.fly-head:after{
+    right:1px;
     transform:rotate(30deg);
 }
 
-/* POOP */
+
+/* MOVIMIENTO MOSCA */
+
+@keyframes flyHover{
+
+    0%{
+        transform:
+            translate3d(0,0,0)
+            rotate(-3deg);
+    }
+
+    20%{
+        transform:
+            translate3d(-5px,-8px,0)
+            rotate(3deg);
+    }
+
+    45%{
+        transform:
+            translate3d(4px,-13px,0)
+            rotate(-2deg);
+    }
+
+    70%{
+        transform:
+            translate3d(-4px,-6px,0)
+            rotate(4deg);
+    }
+
+    100%{
+        transform:
+            translate3d(0,0,0)
+            rotate(-3deg);
+    }
+}
+
+@keyframes flyWingLeft{
+
+    from{
+        transform:
+            rotate(-31deg)
+            scaleY(1);
+    }
+
+    to{
+        transform:
+            rotate(-31deg)
+            scaleY(.18);
+    }
+}
+
+@keyframes flyWingRight{
+
+    from{
+        transform:
+            rotate(31deg)
+            scaleY(1);
+    }
+
+    to{
+        transform:
+            rotate(31deg)
+            scaleY(.18);
+    }
+}
+
+
+/* =========================================================
+   MIERDA
+========================================================= */
 
 .poop{
     position:absolute;
+
     z-index:40;
+
     right:7%;
     bottom:24%;
+
     font-size:80px;
+
     opacity:0;
-    transform:scale(.2);
+
+    transform:
+        scale(.2)
+        rotate(-10deg);
+
     transition:1s ease;
+
+    filter:
+        drop-shadow(0 8px 8px #0004);
 }
 
 .poop.show{
     opacity:1;
-    transform:scale(1);
+
+    transform:
+        scale(1)
+        rotate(0deg);
 }
 
 .poop span{
     position:absolute;
+
     left:31px;
     top:17px;
+
     font-size:17px;
 }
 
-/* TEXT */
+
+/* =========================================================
+   TEXTO DE ESCENA
+========================================================= */
 
 .scene-text{
     position:absolute;
+
     z-index:100;
+
     top:11%;
     left:50%;
+
     width:90%;
+
     transform:translateX(-50%);
+
     text-align:center;
+
     color:white;
+
     font-weight:bold;
-    font-size:clamp(18px,4vw,32px);
-    text-shadow:0 3px 15px #0008;
+
+    font-size:
+        clamp(18px,4vw,32px);
+
+    text-shadow:
+        0 3px 15px #0008;
+
     opacity:0;
+
     transition:.6s;
 }
 
@@ -572,21 +1116,38 @@ body{
     opacity:1;
 }
 
-/* QUOTE */
+
+/* =========================================================
+   FRASE
+========================================================= */
 
 .quote{
     position:absolute;
+
     z-index:150;
+
     top:50%;
     left:50%;
+
     width:94%;
-    transform:translate(-50%,-50%);
+
+    transform:
+        translate(-50%,-50%);
+
     text-align:center;
+
     color:white;
+
     font-weight:900;
-    font-size:clamp(22px,5vw,58px);
-    text-shadow:0 4px 20px #000b;
+
+    font-size:
+        clamp(22px,5vw,58px);
+
+    text-shadow:
+        0 4px 20px #000b;
+
     opacity:0;
+
     pointer-events:none;
 }
 
@@ -596,15 +1157,32 @@ body{
 
 .quote div{
     margin:5px 0;
+
     opacity:0;
-    animation:quoteIn .7s forwards;
+
+    animation:
+        quoteIn .7s forwards;
 }
 
-.quote div:nth-child(1){animation-delay:.1s}
-.quote div:nth-child(2){animation-delay:.5s}
-.quote div:nth-child(3){animation-delay:.9s}
-.quote div:nth-child(4){animation-delay:1.3s}
-.quote div:nth-child(5){animation-delay:1.7s}
+.quote div:nth-child(1){
+    animation-delay:.1s;
+}
+
+.quote div:nth-child(2){
+    animation-delay:.5s;
+}
+
+.quote div:nth-child(3){
+    animation-delay:.9s;
+}
+
+.quote div:nth-child(4){
+    animation-delay:1.3s;
+}
+
+.quote div:nth-child(5){
+    animation-delay:1.7s;
+}
 
 .quote em{
     color:#ffd32d;
@@ -615,20 +1193,33 @@ body{
     color:#6f3b20;
 }
 
-/* END */
+
+/* =========================================================
+   FINAL
+========================================================= */
 
 .ending{
     position:absolute;
+
     inset:0;
+
     z-index:250;
+
     display:flex;
+
     justify-content:center;
     align-items:center;
+
     padding:18px;
+
     background:#180e0888;
+
     backdrop-filter:blur(8px);
+
     opacity:0;
+
     pointer-events:none;
+
     transition:1s;
 }
 
@@ -639,12 +1230,21 @@ body{
 
 .ending-card{
     width:min(680px,94vw);
-    padding:clamp(25px,6vw,50px);
+
+    padding:
+        clamp(25px,6vw,50px);
+
     border-radius:28px;
+
     background:#fff7dcf5;
+
     text-align:center;
-    box-shadow:0 30px 80px #0007;
+
+    box-shadow:
+        0 30px 80px #0007;
+
     transform:scale(.8);
+
     transition:1s;
 }
 
@@ -654,24 +1254,34 @@ body{
 
 .ending-bee{
     font-size:60px;
-    animation:beeFloat 2s infinite;
+
+    animation:
+        beeFloat 2s infinite;
 }
 
 .ending-card h2{
     color:#633714;
-    font-size:clamp(32px,8vw,60px);
+
+    font-size:
+        clamp(32px,8vw,60px);
 }
 
 .ending-card p{
     margin-top:10px;
+
     color:#795c3c;
 }
 
 .final-text{
     margin-top:22px;
-    font-size:clamp(19px,4.5vw,34px);
+
+    font-size:
+        clamp(19px,4.5vw,34px);
+
     font-weight:bold;
+
     color:#4d321e;
+
     line-height:1.3;
 }
 
@@ -685,7 +1295,9 @@ body{
 
 .author{
     margin-top:22px;
+
     color:#795c3c;
+
     letter-spacing:3px;
 }
 
@@ -695,101 +1307,191 @@ body{
 
 #replayBtn{
     margin-top:25px;
+
     padding:13px 28px;
+
     background:#302218;
+
     color:white;
 }
 
-/* CONTROLS */
+
+/* =========================================================
+   CONTROLES
+========================================================= */
 
 .sound,
 .skip{
     position:absolute;
+
     z-index:300;
+
     border:1px solid #fff6;
+
     background:#0004;
+
     color:white;
+
     cursor:pointer;
+
+    backdrop-filter:blur(5px);
 }
 
 .sound{
     right:15px;
     top:15px;
+
     width:43px;
     height:43px;
+
     border-radius:50%;
 }
 
 .skip{
     right:15px;
     bottom:32px;
+
     padding:9px 14px;
+
     border-radius:30px;
 }
 
 .progress{
     position:absolute;
+
     z-index:300;
+
     left:5%;
     right:5%;
+
     bottom:13px;
+
     height:3px;
+
     background:#fff5;
 }
 
 #progressBar{
     width:0;
     height:100%;
+
     background:#fff1a1;
+
     transition:.3s;
 }
 
-/* ANIMATIONS */
+
+/* =========================================================
+   ANIMACIONES GENERALES
+========================================================= */
 
 @keyframes glow{
-    from{transform:scale(.8);opacity:.3}
-    to{transform:scale(1.2);opacity:.8}
+
+    from{
+        transform:scale(.8);
+        opacity:.3;
+    }
+
+    to{
+        transform:scale(1.2);
+        opacity:.8;
+    }
 }
 
 @keyframes beeFloat{
-    0%,100%{transform:translateY(0) rotate(-4deg)}
-    50%{transform:translateY(-10px) rotate(4deg)}
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(-4deg);
+    }
+
+    50%{
+        transform:
+            translateY(-10px)
+            rotate(4deg);
+    }
 }
 
 @keyframes sunPulse{
-    0%,100%{transform:scale(1)}
-    50%{transform:scale(1.08)}
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
 }
 
 @keyframes cloudMove{
-    from{margin-left:0}
-    to{margin-left:150vw}
-}
 
-@keyframes wing{
-    from{transform:scaleY(1)}
-    to{transform:scaleY(.25)}
-}
+    from{
+        margin-left:0;
+    }
 
-@keyframes flyFloat{
-    0%,100%{transform:translateY(0) rotate(-3deg)}
-    50%{transform:translateY(-10px) rotate(4deg)}
+    to{
+        margin-left:150vw;
+    }
 }
 
 @keyframes quoteIn{
+
     from{
         opacity:0;
-        transform:translateY(25px) scale(.8);
+
+        transform:
+            translateY(25px)
+            scale(.8);
     }
+
     to{
         opacity:1;
-        transform:translateY(0) scale(1);
+
+        transform:
+            translateY(0)
+            scale(1);
     }
 }
 
-/* CELULAR */
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+    .bee{
+        width:120px;
+        height:95px;
+    }
+
+    .fly{
+        width:110px;
+        height:105px;
+    }
+
+    .honey{
+        left:47%;
+    }
+
+    .scene-text{
+        top:9%;
+    }
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
 
 @media(max-width:700px){
+
+    html,
+    body{
+        width:100%;
+        height:100%;
+    }
 
     .intro h1{
         letter-spacing:4px;
@@ -799,48 +1501,268 @@ body{
         letter-spacing:3px;
     }
 
+    .intro-bee{
+        font-size:62px;
+    }
+
     .sun{
         width:85px;
         height:85px;
         right:6%;
+        top:8%;
     }
+
+    /* COLMENA */
 
     .hive{
-        transform:scale(.7);
-        transform-origin:bottom left;
+        left:3%;
+        bottom:23%;
+
+        transform:scale(.68);
+
+        transform-origin:
+            bottom left;
     }
 
+    /* ABEJA */
+
     .bee{
-        left:10%;
+        left:9%;
+        bottom:46%;
+
+        width:120px;
+        height:95px;
+
         transform:scale(.72);
-        transform-origin:center;
+
+        transform-origin:
+            center center;
     }
+
+    /* MIEL */
 
     .honey{
         left:43%;
+        bottom:22%;
+
+        width:125px;
+        height:155px;
+
         transform:scale(.72);
-        transform-origin:bottom center;
+
+        transform-origin:
+            bottom center;
     }
+
+    /* MOSCA */
 
     .fly{
-        right:3%;
-        transform:scale(.68);
+        right:1%;
+        bottom:46%;
+
+        width:110px;
+        height:105px;
+
+        transform:scale(.66);
+
+        transform-origin:
+            center center;
     }
 
+    /* MIERDA */
+
     .poop{
-        right:2%;
-        font-size:60px;
+        right:1%;
+        bottom:22%;
+
+        font-size:58px;
     }
+
+    .poop span{
+        left:23px;
+        top:12px;
+        font-size:14px;
+    }
+
+    /* TEXTO */
+
+    .scene-text{
+        width:94%;
+
+        top:9%;
+
+        font-size:
+            clamp(17px,5vw,25px);
+
+        line-height:1.2;
+    }
+
+    /* FRASE */
 
     .quote{
         width:96%;
+
+        font-size:
+            clamp(20px,6vw,34px);
+
+        line-height:1.12;
     }
 
     .quote div{
-        margin:6px 0;
+        margin:7px 0;
+    }
+
+    /* FINAL */
+
+    .ending{
+        padding:12px;
     }
 
     .ending-card{
+        width:94vw;
+
+        max-height:90vh;
+
+        overflow:auto;
+
         padding:25px 16px;
+
+        border-radius:22px;
+    }
+
+    .ending-bee{
+        font-size:48px;
+    }
+
+    .ending-card h2{
+        font-size:
+            clamp(30px,9vw,48px);
+    }
+
+    .final-text{
+        font-size:
+            clamp(18px,5vw,28px);
+    }
+
+    /* BOTONES */
+
+    .sound{
+        width:40px;
+        height:40px;
+
+        right:10px;
+        top:10px;
+    }
+
+    .skip{
+        right:10px;
+        bottom:27px;
+
+        font-size:12px;
+
+        padding:8px 12px;
+    }
+
+    .progress{
+        left:4%;
+        right:4%;
+        bottom:10px;
+    }
+}
+
+
+/* =========================================================
+   CELULARES MUY PEQUEÑOS
+========================================================= */
+
+@media(max-width:420px){
+
+    .intro h1{
+        font-size:42px;
+        letter-spacing:3px;
+    }
+
+    .intro p{
+        font-size:14px;
+    }
+
+    #startBtn{
+        padding:13px 22px;
+        font-size:12px;
+    }
+
+    .bee{
+        left:7%;
+        bottom:45%;
+
+        transform:scale(.60);
+    }
+
+    .fly{
+        right:-2%;
+        bottom:45%;
+
+        transform:scale(.56);
+    }
+
+    .honey{
+        left:40%;
+        transform:scale(.62);
+    }
+
+    .quote{
+        font-size:20px;
+    }
+
+    .scene-text{
+        font-size:17px;
+    }
+
+    .poop{
+        font-size:52px;
+    }
+}
+
+
+/* =========================================================
+   PANTALLAS GRANDES
+========================================================= */
+
+@media(min-width:1400px){
+
+    .bee{
+        width:150px;
+        height:115px;
+    }
+
+    .fly{
+        width:135px;
+        height:125px;
+    }
+
+    .hive{
+        transform:scale(1.15);
+        transform-origin:bottom left;
+    }
+
+    .honey{
+        transform:scale(1.1);
+        transform-origin:bottom center;
+    }
+}
+
+
+/* =========================================================
+   REDUCIR MOVIMIENTO SI EL USUARIO LO SOLICITA
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
     }
 }
