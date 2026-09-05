@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Las Abejas by HANSSY ROY</title>
+<title>Las Abejas 🐝 by HANSSY ROY</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -24,117 +24,89 @@
     </div>
 </section>
 
+
 <main id="movie" class="movie">
 
     <div class="sky"></div>
     <div class="sun"></div>
 
-    <div class="cloud cloud-one"></div>
-    <div class="cloud cloud-two"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
 
-    <div class="mountains mountains-back">
-        <div></div><div></div><div></div>
-    </div>
-
-    <div class="mountains mountains-front">
-        <div></div><div></div><div></div>
-    </div>
+    <div class="mountains back"></div>
+    <div class="mountains front"></div>
 
     <div class="field"></div>
 
     <div id="sceneText" class="scene-text"></div>
 
     <!-- COLMENA -->
-    <div id="hive" class="hive">
+    <div class="hive">
         <div class="hive-roof"></div>
-
         <div class="hive-body">
-            <div class="hive-stripe"></div>
-            <div class="hive-stripe"></div>
-            <div class="hive-stripe"></div>
-            <div class="hive-door"></div>
+            <div class="door"></div>
+        </div>
+    </div>
+
+    <!-- MIEL -->
+    <div id="honey" class="honey">
+        <div class="jar">
+            <div class="honey-liquid"></div>
+            <div class="label">🍯<br><b>MIEL</b><small>100% NATURAL</small></div>
+            <div class="shine"></div>
         </div>
     </div>
 
     <!-- ABEJA -->
     <div id="bee" class="bee">
-        <div class="bee-wing bee-wing-left"></div>
-        <div class="bee-wing bee-wing-right"></div>
-
+        <div class="wing w1"></div>
+        <div class="wing w2"></div>
         <div class="bee-body">
-            <div class="bee-stripe"></div>
-            <div class="bee-stripe"></div>
-            <div class="bee-stripe"></div>
+            <i></i><i></i><i></i>
         </div>
-
         <div class="bee-head">
-            <div class="bee-eye eye-left"></div>
-            <div class="bee-eye eye-right"></div>
-            <div class="bee-mouth"></div>
-        </div>
-
-        <div class="antenna antenna-left"></div>
-        <div class="antenna antenna-right"></div>
-    </div>
-
-    <!-- MIEL -->
-    <div id="honey" class="honey">
-        <div class="honey-glow"></div>
-        <div class="honey-lid"></div>
-
-        <div class="honey-jar">
-            <div class="honey-liquid"></div>
-
-            <div class="honey-label">
-                <div>🍯</div>
-                <strong>MIEL</strong>
-                <small>100% NATURAL</small>
-            </div>
-
-            <div class="jar-shine"></div>
+            <span></span>
+            <span></span>
+            <b></b>
         </div>
     </div>
 
     <!-- MOSCA -->
     <div id="fly" class="fly">
-        <div class="fly-wing fly-wing-left"></div>
-        <div class="fly-wing fly-wing-right"></div>
+        <div class="fly-wing fw1"></div>
+        <div class="fly-wing fw2"></div>
 
         <div class="fly-body">
             <div class="fly-head">
-                <div class="fly-eye"></div>
-                <div class="fly-eye"></div>
+                <i></i>
+                <i></i>
             </div>
-
-            <div class="fly-stripe"></div>
-            <div class="fly-stripe"></div>
+            <b></b>
+            <b></b>
         </div>
     </div>
 
     <!-- MIERDA -->
     <div id="poop" class="poop">
         💩
-        <div class="poop-face">😏</div>
+        <span>😏</span>
     </div>
 
-    <!-- BURBUJAS -->
-    <div class="bubble bubble-one">🤢</div>
-    <div class="bubble bubble-two">😵</div>
-    <div class="bubble bubble-three">💨</div>
+    <div class="bubble">🤢</div>
+    <div class="bubble bubble2">💨</div>
 
     <!-- FRASE -->
     <div id="quote" class="quote">
         <div>LAS ABEJAS</div>
         <div>NO PIERDEN SU TIEMPO</div>
         <div>EXPLICANDO A LAS MOSCAS</div>
-        <div>QUE LA <span>MIEL</span> ES MÁS RICA</div>
+        <div>QUE LA <em>MIEL</em> ES MÁS RICA</div>
         <div>QUE LA <strong>MIERDA.</strong></div>
     </div>
 
     <!-- FINAL -->
     <section id="ending" class="ending">
         <div class="ending-card">
-
             <div class="ending-bee">🐝</div>
 
             <h2>LAS ABEJAS</h2>
@@ -144,21 +116,21 @@
                 EXPLICANDO A LAS MOSCAS...
             </p>
 
-            <div class="ending-final">
+            <div class="final-text">
                 QUE LA <span>MIEL</span> ES MÁS RICA<br>
                 QUE LA <strong>MIERDA.</strong>
             </div>
 
-            <div class="author-sign">
-                BY <strong>HANSSY ROY</strong>
+            <div class="author">
+                BY <b>HANSSY ROY</b>
             </div>
 
             <button id="replayBtn">↻ REPETIR</button>
         </div>
     </section>
 
-    <button id="soundBtn" class="sound-button">🔊</button>
-    <button id="skipBtn" class="skip-button">SALTAR →</button>
+    <button id="soundBtn" class="sound">🔊</button>
+    <button id="skipBtn" class="skip">SALTAR →</button>
 
     <div class="progress">
         <div id="progressBar"></div>
@@ -169,4 +141,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-

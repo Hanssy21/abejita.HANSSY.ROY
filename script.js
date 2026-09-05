@@ -1,297 +1,260 @@
-const intro=document.getElementById("intro");
-const movie=document.getElementById("movie");
-const startBtn=document.getElementById("startBtn");
-const replayBtn=document.getElementById("replayBtn");
-const soundBtn=document.getElementById("soundBtn");
-const skipBtn=document.getElementById("skipBtn");
+const intro = document.getElementById("intro");
+const movie = document.getElementById("movie");
 
-const bee=document.getElementById("bee");
-const fly=document.getElementById("fly");
-const honey=document.getElementById("honey");
-const poop=document.getElementById("poop");
-const quote=document.getElementById("quote");
-const ending=document.getElementById("ending");
-const sceneText=document.getElementById("sceneText");
-const progressBar=document.getElementById("progressBar");
+const startBtn = document.getElementById("startBtn");
+const replayBtn = document.getElementById("replayBtn");
+const soundBtn = document.getElementById("soundBtn");
+const skipBtn = document.getElementById("skipBtn");
 
-let running=false;
-let sound=true;
+const bee = document.getElementById("bee");
+const fly = document.getElementById("fly");
+const honey = document.getElementById("honey");
+const poop = document.getElementById("poop");
 
-const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const quote = document.getElementById("quote");
+const ending = document.getElementById("ending");
+const sceneText = document.getElementById("sceneText");
+const progressBar = document.getElementById("progressBar");
 
-function text(t){
+let running = false;
+let sound = true;
+let audio = null;
+
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+function beep(freq = 440, duration = .15) {
+
+    if (!sound) return;
+
+    try {
+
+        if (!audio) {
+            audio = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        if (audio.state === "suspended") {
+            audio.resume();
+        }
+
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
+
+        osc.frequency.value = freq;
+        osc.type = "sine";
+
+        gain.gain.setValueAtTime(.04, audio.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audio.currentTime + duration
+        );
+
+        osc.connect(gain);
+        gain.connect(audio.destination);
+
+        osc.start();
+        osc.stop(audio.currentTime + duration);
+
+    } catch(e) {}
+
+}
+
+function text(message) {
+
+    sceneText.textContent = message;
     sceneText.classList.remove("show");
 
-    setTimeout(()=>{
-        sceneText.textContent=t;
-        sceneText.classList.add("show");
-    },100);
+    void sceneText.offsetWidth;
+
+    sceneText.classList.add("show");
 }
 
-function progress(n){
-    progressBar.style.width=n+"%";
+function hideText() {
+    sceneText.classList.remove("show");
 }
 
-function reset(){
+function progress(value) {
+    progressBar.style.width = value + "%";
+}
 
-    bee.style.left="17%";
-    bee.style.bottom="48%";
+function reset() {
 
-    fly.style.right="10%";
-    fly.style.bottom="48%";
+    bee.style.left = "16%";
+    bee.style.bottom = "48%";
 
-    bee.getAnimations().forEach(a=>a.cancel());
-    fly.getAnimations().forEach(a=>a.cancel());
+    fly.style.right = "10%";
+    fly.style.bottom = "48%";
 
     honey.classList.remove("show");
     poop.classList.remove("show");
     quote.classList.remove("show");
     ending.classList.remove("show");
-    sceneText.classList.remove("show");
 
-    document.querySelectorAll(".bubble").forEach(b=>{
-        b.classList.remove("active");
-    });
-
+    hideText();
     progress(0);
 }
 
-/* ABEJA: VUELO SUAVE */
+function beeToHoney() {
 
-function beeMove(x,y,time=2000){
+    bee.style.left = "42%";
+    bee.style.bottom = "37%";
 
-    bee.animate([
-        {
-            transform:"translate(0,0) rotate(-3deg)"
-        },
-        {
-            transform:`translate(${x*.45}px,${y*.45}px) rotate(5deg)`
-        },
-        {
-            transform:`translate(${x*.8}px,${y*.8}px) rotate(-4deg)`
-        },
-        {
-            transform:`translate(${x}px,${y}px) rotate(2deg)`
-        }
-    ],{
-        duration:time,
-        easing:"cubic-bezier(.25,.7,.25,1)",
-        fill:"forwards"
-    });
+    beep(180,.3);
 }
 
-/* MOSCA: PERSIGUE A LA ABEJA */
+function flyFollowBee() {
 
-function flyChase(){
+    fly.style.right = "36%";
+    fly.style.bottom = "43%";
 
-    fly.animate([
-
-        {
-            transform:"translate(0,0) rotate(-3deg)"
-        },
-
-        {
-            transform:"translate(-35px,-15px) rotate(5deg)"
-        },
-
-        {
-            transform:"translate(-75px,-5px) rotate(-5deg)"
-        },
-
-        {
-            transform:"translate(-105px,20px) rotate(4deg)"
-        },
-
-        {
-            transform:"translate(-130px,5px) rotate(-2deg)"
-        }
-
-    ],{
-
-        duration:3000,
-        easing:"cubic-bezier(.2,.7,.2,1)",
-        fill:"forwards"
-
-    });
 }
 
-/* MOSCA: CAMBIA DE RUMBO Y VA A LA MIERDA */
+function flyToPoop() {
 
-function flyToPoop(){
+    fly.style.right = "8%";
+    fly.style.bottom = "27%";
 
-    fly.animate([
-
-        {
-            transform:"translate(-130px,5px) rotate(0)"
-        },
-
-        {
-            transform:"translate(-100px,35px) rotate(10deg)"
-        },
-
-        {
-            transform:"translate(-55px,80px) rotate(-8deg)"
-        },
-
-        {
-            transform:"translate(0,120px) rotate(6deg)"
-        }
-
-    ],{
-
-        duration:2400,
-        easing:"cubic-bezier(.2,.8,.2,1)",
-        fill:"forwards"
-
-    });
 }
 
-/* ABEJA VA HACIA LA MIEL */
+function showQuote() {
 
-function beeToHoney(){
+    quote.classList.remove("show");
 
-    bee.animate([
+    void quote.offsetWidth;
 
-        {
-            transform:"translate(0,0) rotate(0)"
-        },
+    quote.classList.add("show");
 
-        {
-            transform:"translate(45px,-25px) rotate(7deg)"
-        },
-
-        {
-            transform:"translate(90px,0) rotate(-5deg)"
-        },
-
-        {
-            transform:"translate(120px,20px) rotate(3deg)"
-        }
-
-    ],{
-
-        duration:2500,
-        easing:"cubic-bezier(.2,.8,.2,1)",
-        fill:"forwards"
-
-    });
+    beep(520,.2);
 }
 
-/* BURBUJAS */
+async function playMovie() {
 
-function bubbles(){
+    if (running) return;
 
-    document.querySelectorAll(".bubble").forEach(b=>{
-
-        b.classList.remove("active");
-
-        void b.offsetWidth;
-
-        b.classList.add("active");
-
-    });
-}
-
-/* ANIMACIÓN PRINCIPAL */
-
-async function play(){
-
-    if(running)return;
-
-    running=true;
+    running = true;
 
     reset();
+
+    if (sound && !audio) {
+        try {
+            audio = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) {}
+    }
 
     intro.classList.add("hide");
     movie.classList.add("active");
 
-    await wait(900);
+    await wait(1000);
 
     /* ESCENA 1 */
 
     progress(8);
+
     text("🌅 Un nuevo día comienza...");
 
-    await wait(1500);
+    await wait(1800);
 
     /* ESCENA 2 */
 
     progress(18);
+
     text("🐝 La abeja sale a trabajar.");
 
-    beeMove(70,-15,1800);
+    await wait(800);
+
+    bee.style.left = "24%";
 
     await wait(1800);
 
     /* ESCENA 3 */
 
     progress(30);
-    text("🍯 Su objetivo es simple: crear algo bueno.");
+
+    text("🍯 La abeja encuentra algo bueno.");
 
     honey.classList.add("show");
 
+    await wait(700);
+
     beeToHoney();
 
-    await wait(2300);
+    await wait(2200);
 
     /* ESCENA 4 */
 
-    progress(43);
-    text("🪰 Pero alguien la está observando...");
+    progress(45);
+
+    text("🐝 La abeja se concentra en su trabajo.");
+
+    await wait(1600);
+
+    /* ESCENA 5 */
+
+    progress(57);
+
+    text("🪰 Una mosca aparece...");
 
     await wait(1000);
 
-    /* MOSCA APARECE Y PERSIGUE */
+    /*
+       LA MOSCA PERSIGUE A LA ABEJA
+       PERO NO LLEGA A LA MIEL
+    */
 
-    progress(52);
-    text("🪰 La mosca comienza a seguirla.");
+    flyFollowBee();
 
-    flyChase();
+    await wait(2200);
 
-    await wait(3000);
+    text("🪰 La mosca intenta llamar su atención.");
 
-    /* MOSCA CAMBIA DE OBJETIVO */
+    await wait(1300);
 
-    progress(63);
-    text("🪰 Hasta que encuentra algo que le interesa más...");
+    /* ESCENA 6 */
+
+    progress(68);
+
+    text("🐝 La abeja simplemente continúa.");
+
+    bee.style.left = "47%";
+    bee.style.bottom = "35%";
+
+    await wait(1300);
+
+    /*
+       LA MOSCA CAMBIA DE OBJETIVO
+       Y SE VA A LA MIERDA
+    */
+
+    progress(76);
 
     poop.classList.add("show");
 
-    await wait(600);
+    await wait(700);
+
+    text("💩 La mosca encuentra algo más interesante.");
+
+    await wait(900);
 
     flyToPoop();
 
-    await wait(2400);
+    await wait(2200);
 
-    /* MOSCA SE QUEDA EN LA MIERDA */
+    /* ESCENA 7 */
 
-    progress(72);
-    text("💩 Y ahí decide quedarse.");
+    progress(84);
 
-    bubbles();
+    text("💨 Cada uno termina donde quiere estar.");
 
-    await wait(1800);
+    await wait(1600);
 
-    /* ABEJA CONTINÚA */
-
-    progress(82);
-    text("🐝 La abeja simplemente continúa con su trabajo.");
-
-    beeMove(45,-15,1800);
-
-    await wait(1900);
+    hideText();
 
     /* FRASE */
 
-    progress(90);
+    progress(91);
 
-    sceneText.classList.remove("show");
+    showQuote();
 
-    await wait(400);
-
-    quote.classList.add("show");
-
-    await wait(4500);
+    await wait(5000);
 
     /* FINAL */
 
@@ -303,57 +266,85 @@ async function play(){
 
     ending.classList.add("show");
 
-    running=false;
+    beep(520,.25);
+
+    running = false;
 }
 
-/* BOTONES */
+/* INICIAR */
 
-startBtn.onclick=play;
+startBtn.addEventListener("click", function() {
+    playMovie();
+});
 
-replayBtn.onclick=()=>{
+/* REPETIR */
 
-    if(running)return;
+replayBtn.addEventListener("click", function() {
 
-    play();
+    if (running) return;
 
-};
-
-skipBtn.onclick=()=>{
-
-    if(!running)return;
-
-    running=false;
-
-    progress(100);
-
-    sceneText.classList.remove("show");
-    quote.classList.remove("show");
-
-    ending.classList.add("show");
-
-};
-
-soundBtn.onclick=()=>{
-
-    sound=!sound;
-
-    soundBtn.textContent=sound?"🔊":"🔇";
-
-};
-
-/* PARALLAX SUAVE */
-
-movie.addEventListener("mousemove",e=>{
-
-    if(!movie.classList.contains("active"))return;
-
-    const sun=document.querySelector(".sun");
-
-    const x=(e.clientX/window.innerWidth-.5)*12;
-    const y=(e.clientY/window.innerHeight-.5)*8;
-
-    sun.style.marginLeft=x+"px";
-    sun.style.marginTop=y+"px";
+    playMovie();
 
 });
 
+/* SONIDO */
+
+soundBtn.addEventListener("click", function() {
+
+    sound = !sound;
+
+    soundBtn.textContent = sound ? "🔊" : "🔇";
+
+    if (sound) {
+        beep(600,.1);
+    }
+
+});
+
+/* SALTAR */
+
+skipBtn.addEventListener("click", function() {
+
+    if (!running) return;
+
+    running = false;
+
+    hideText();
+
+    quote.classList.remove("show");
+
+    progress(100);
+
+    ending.classList.add("show");
+
+});
+
+/* PARALLAX */
+
+movie.addEventListener("mousemove", function(e) {
+
+    const x = e.clientX / window.innerWidth - .5;
+    const y = e.clientY / window.innerHeight - .5;
+
+    const sun = document.querySelector(".sun");
+
+    sun.style.marginLeft = x * 15 + "px";
+    sun.style.marginTop = y * 10 + "px";
+
+});
+
+/* PARALLAX CELULAR */
+
+window.addEventListener("deviceorientation", function(e) {
+
+    if (!movie.classList.contains("active")) return;
+
+    const sun = document.querySelector(".sun");
+
+    const x = (e.gamma || 0) / 45;
+    const y = (e.beta || 0) / 90;
+
+    sun.style.marginLeft = x * 12 + "px";
+    sun.style.marginTop = y * 8 + "px";
+
+});
