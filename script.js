@@ -1,51 +1,35 @@
 /* ======================================================
+   LAS ABEJAS - JS MEJORADO
+   HANSSY ROY
+   Optimizado para PC + CELULAR
+====================================================== */
+
+
+/* ======================================================
    ELEMENTOS
 ====================================================== */
 
-const intro =
-    document.getElementById("intro");
+const intro = document.getElementById("intro");
+const movie = document.getElementById("movie");
 
-const movie =
-    document.getElementById("movie");
+const startBtn = document.getElementById("startBtn");
+const replayBtn = document.getElementById("replayBtn");
+const soundBtn = document.getElementById("soundBtn");
+const skipBtn = document.getElementById("skipBtn");
 
-const startBtn =
-    document.getElementById("startBtn");
+const bee = document.getElementById("bee");
+const fly = document.getElementById("fly");
+const honey = document.getElementById("honey");
+const poop = document.getElementById("poop");
 
-const replayBtn =
-    document.getElementById("replayBtn");
+const quote = document.getElementById("quote");
+const ending = document.getElementById("ending");
 
-const soundBtn =
-    document.getElementById("soundBtn");
+const sceneText = document.getElementById("sceneText");
+const particles = document.getElementById("particles");
+const progressBar = document.getElementById("progressBar");
 
-const skipBtn =
-    document.getElementById("skipBtn");
-
-const bee =
-    document.getElementById("bee");
-
-const fly =
-    document.getElementById("fly");
-
-const honey =
-    document.getElementById("honey");
-
-const poop =
-    document.getElementById("poop");
-
-const quote =
-    document.getElementById("quote");
-
-const ending =
-    document.getElementById("ending");
-
-const sceneText =
-    document.getElementById("sceneText");
-
-const particles =
-    document.getElementById("particles");
-
-const progressBar =
-    document.getElementById("progressBar");
+const sun = document.querySelector(".sun");
 
 
 /* ======================================================
@@ -53,24 +37,23 @@ const progressBar =
 ====================================================== */
 
 let running = false;
-
 let soundEnabled = true;
-
 let audioContext = null;
+
+let animationToken = 0;
 
 
 /* ======================================================
-   UTILIDAD
+   UTILIDADES
 ====================================================== */
 
 function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-    return new Promise(resolve => {
 
-        setTimeout(resolve, ms);
-
-    });
-
+function isMobile() {
+    return window.innerWidth <= 700;
 }
 
 
@@ -80,17 +63,17 @@ function wait(ms) {
 
 function createParticles() {
 
-    for (
-        let i = 0;
-        i < 70;
-        i++
-    ) {
+    if (!particles) return;
 
-        const particle =
-            document.createElement("div");
+    particles.innerHTML = "";
 
-        particle.className =
-            "particle";
+    const amount = isMobile() ? 35 : 70;
+
+    for (let i = 0; i < amount; i++) {
+
+        const particle = document.createElement("div");
+
+        particle.className = "particle";
 
         particle.style.left =
             Math.random() * 100 + "%";
@@ -99,7 +82,7 @@ function createParticles() {
             Math.random() * 100 + "%";
 
         const size =
-            2 + Math.random() * 4;
+            2 + Math.random() * 3;
 
         particle.style.width =
             size + "px";
@@ -108,46 +91,39 @@ function createParticles() {
             size + "px";
 
         particle.style.opacity =
-            .2 + Math.random() * .8;
+            .2 + Math.random() * .6;
 
         particle.animate(
-
             [
                 {
                     transform:
-                        "translateY(0) scale(1)"
+                        "translate3d(0,0,0) scale(1)"
                 },
-
                 {
                     transform:
-                        `translateY(-${
-                            30 +
-                            Math.random() * 100
-                        }px) scale(.2)`
+                        `translate3d(
+                            ${-20 + Math.random() * 40}px,
+                            -${30 + Math.random() * 80}px,
+                            0
+                        ) scale(.2)`
                 }
-
             ],
-
             {
                 duration:
-                    3000 +
-                    Math.random() * 6000,
+                    4000 + Math.random() * 5000,
 
-                iterations:
-                    Infinity,
+                iterations: Infinity,
 
                 delay:
-                    Math.random() * 5000
+                    Math.random() * 4000,
+
+                easing:
+                    "ease-in-out"
             }
-
         );
 
-        particles.appendChild(
-            particle
-        );
-
+        particles.appendChild(particle);
     }
-
 }
 
 createParticles();
@@ -159,29 +135,32 @@ createParticles();
 
 function initAudio() {
 
-    if (!soundEnabled) {
-        return;
-    }
+    if (!soundEnabled) return;
 
-    if (!audioContext) {
+    try {
 
-        audioContext =
-            new (
+        if (!audioContext) {
+
+            const AudioCtx =
                 window.AudioContext ||
-                window.webkitAudioContext
-            )();
+                window.webkitAudioContext;
 
+            if (!AudioCtx) return;
+
+            audioContext =
+                new AudioCtx();
+        }
+
+        if (
+            audioContext.state ===
+            "suspended"
+        ) {
+            audioContext.resume();
+        }
+
+    } catch (error) {
+        console.log("Audio no disponible");
     }
-
-    if (
-        audioContext.state ===
-        "suspended"
-    ) {
-
-        audioContext.resume();
-
-    }
-
 }
 
 
@@ -189,51 +168,57 @@ function beep(
     frequency = 440,
     duration = .15,
     type = "sine",
-    volume = .04
+    volume = .035
 ) {
 
-    if (!soundEnabled) {
-        return;
-    }
+    if (!soundEnabled) return;
 
     initAudio();
 
-    const oscillator =
-        audioContext.createOscillator();
+    if (!audioContext) return;
 
-    const gain =
-        audioContext.createGain();
+    try {
 
-    oscillator.type =
-        type;
+        const oscillator =
+            audioContext.createOscillator();
 
-    oscillator.frequency.value =
-        frequency;
+        const gain =
+            audioContext.createGain();
 
-    gain.gain.setValueAtTime(
-        volume,
-        audioContext.currentTime
-    );
+        oscillator.type = type;
 
-    gain.gain.exponentialRampToValueAtTime(
-        .001,
-        audioContext.currentTime +
-        duration
-    );
+        oscillator.frequency.setValueAtTime(
+            frequency,
+            audioContext.currentTime
+        );
 
-    oscillator.connect(gain);
+        gain.gain.setValueAtTime(
+            .001,
+            audioContext.currentTime
+        );
 
-    gain.connect(
-        audioContext.destination
-    );
+        gain.gain.exponentialRampToValueAtTime(
+            volume,
+            audioContext.currentTime + .02
+        );
 
-    oscillator.start();
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audioContext.currentTime + duration
+        );
 
-    oscillator.stop(
-        audioContext.currentTime +
-        duration
-    );
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
 
+        oscillator.start();
+
+        oscillator.stop(
+            audioContext.currentTime + duration + .02
+        );
+
+    } catch (error) {
+        console.log("Error de audio");
+    }
 }
 
 
@@ -243,75 +228,83 @@ function beep(
 
 function beeSound() {
 
-    if (!soundEnabled) {
-        return;
-    }
+    if (!soundEnabled) return;
 
     initAudio();
 
-    const oscillator =
-        audioContext.createOscillator();
+    if (!audioContext) return;
 
-    const gain =
-        audioContext.createGain();
+    try {
 
-    oscillator.type =
-        "sawtooth";
+        const oscillator =
+            audioContext.createOscillator();
 
-    oscillator.frequency.value =
-        150;
+        const gain =
+            audioContext.createGain();
 
-    gain.gain.value =
-        .015;
+        oscillator.type = "sawtooth";
 
-    oscillator.connect(gain);
+        oscillator.frequency.setValueAtTime(
+            145,
+            audioContext.currentTime
+        );
 
-    gain.connect(
-        audioContext.destination
-    );
+        oscillator.frequency.linearRampToValueAtTime(
+            190,
+            audioContext.currentTime + .35
+        );
 
-    oscillator.start();
+        gain.gain.setValueAtTime(
+            .001,
+            audioContext.currentTime
+        );
 
-    oscillator.frequency.linearRampToValueAtTime(
-        190,
-        audioContext.currentTime + .25
-    );
+        gain.gain.linearRampToValueAtTime(
+            .018,
+            audioContext.currentTime + .05
+        );
 
-    oscillator.stop(
-        audioContext.currentTime + .3
-    );
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audioContext.currentTime + .4
+        );
 
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.start();
+
+        oscillator.stop(
+            audioContext.currentTime + .42
+        );
+
+    } catch (error) {}
 }
 
 
 /* ======================================================
-   TEXTO DE ESCENA
+   TEXTO
 ====================================================== */
 
 async function showSceneText(text) {
 
-    sceneText.classList.remove(
-        "show"
-    );
+    if (!sceneText) return;
 
-    await wait(200);
+    sceneText.classList.remove("show");
 
-    sceneText.textContent =
-        text;
+    await wait(180);
 
-    sceneText.classList.add(
-        "show"
-    );
+    sceneText.textContent = text;
 
+    sceneText.classList.add("show");
 }
 
 
 function hideSceneText() {
 
-    sceneText.classList.remove(
-        "show"
-    );
+    if (!sceneText) return;
 
+    sceneText.classList.remove("show");
 }
 
 
@@ -321,135 +314,268 @@ function hideSceneText() {
 
 function progress(percent) {
 
-    progressBar.style.width =
-        percent + "%";
+    if (!progressBar) return;
 
+    progressBar.style.width =
+        Math.max(0, Math.min(100, percent)) + "%";
 }
 
 
 /* ======================================================
-   RESET
+   RESET COMPLETO
 ====================================================== */
 
 function resetScene() {
 
-    bee.style.left =
-        "17%";
+    animationToken++;
 
-    bee.style.bottom =
-        "48%";
-
-    fly.style.right =
-        "12%";
-
-    fly.style.bottom =
-        "47%";
-
-    honey.classList.remove(
-        "show"
+    bee.getAnimations().forEach(
+        animation => animation.cancel()
     );
 
-    poop.classList.remove(
-        "show"
+    fly.getAnimations().forEach(
+        animation => animation.cancel()
     );
 
-    quote.classList.remove(
-        "show"
-    );
+    bee.style.transition = "none";
+    fly.style.transition = "none";
 
-    ending.classList.remove(
-        "show"
-    );
+    bee.style.left = "17%";
+    bee.style.bottom = "48%";
+
+    fly.style.right = "12%";
+    fly.style.bottom = "47%";
+
+    bee.style.transform =
+        "translate3d(0,0,0) scale(1) rotate(0deg)";
+
+    fly.style.transform =
+        "translate3d(0,0,0) scale(1) rotate(0deg)";
+
+    honey.classList.remove("show");
+    poop.classList.remove("show");
+    quote.classList.remove("show");
+    ending.classList.remove("show");
+
+    document
+        .querySelectorAll(".bubble")
+        .forEach(bubble => {
+            bubble.classList.remove("active");
+        });
 
     hideSceneText();
 
     progress(0);
 
+    /*
+       Volvemos a activar las transiciones
+       después de un pequeño frame.
+    */
+
+    requestAnimationFrame(() => {
+
+        bee.style.transition =
+            "left 1.8s cubic-bezier(.22,.61,.36,1), bottom 1.8s cubic-bezier(.22,.61,.36,1)";
+
+        fly.style.transition =
+            "right 1.8s cubic-bezier(.22,.61,.36,1), bottom 1.8s cubic-bezier(.22,.61,.36,1)";
+
+    });
 }
 
 
 /* ======================================================
-   ABEJA SE MUEVE
+   ABEJA: MOVIMIENTO NATURAL
 ====================================================== */
 
-function moveBeeToHoney() {
-
-    bee.style.left =
-        "40%";
-
-    bee.style.bottom =
-        "38%";
-
-    bee.style.transform =
-        "scale(1.1) rotate(5deg)";
+async function moveBeeToHoney() {
 
     beeSound();
 
+    /*
+       Primero un pequeño vuelo hacia arriba.
+    */
+
+    bee.style.transform =
+        "translate3d(0,-12px,0) scale(1.02) rotate(-2deg)";
+
+    await wait(250);
+
+    /*
+       Después avanza hacia la miel.
+    */
+
+    bee.style.left =
+        isMobile() ? "30%" : "40%";
+
+    bee.style.bottom =
+        isMobile() ? "38%" : "38%";
+
+    bee.style.transform =
+        "translate3d(0,0,0) scale(1.05) rotate(4deg)";
+
+    await wait(1400);
+
+    /*
+       Pequeño movimiento de frenado.
+    */
+
+    bee.style.transform =
+        "translate3d(0,-5px,0) scale(1.03) rotate(0deg)";
+
+    await wait(250);
+
+    bee.style.transform =
+        "translate3d(0,0,0) scale(1.02) rotate(-2deg)";
 }
 
 
 /* ======================================================
-   MOSCA SE ACERCA
+   ABEJA: PEQUEÑO VUELO ALREDEDOR DE LA MIEL
 ====================================================== */
 
-function moveFlyCloser() {
+async function beeInspectHoney() {
 
-    fly.style.right =
-        "29%";
+    beeSound();
 
-    fly.style.bottom =
-        "39%";
+    bee.animate(
+        [
+            {
+                transform:
+                    "translate3d(0,0,0) rotate(-2deg) scale(1)"
+            },
+            {
+                transform:
+                    "translate3d(10px,-10px,0) rotate(5deg) scale(1.04)"
+            },
+            {
+                transform:
+                    "translate3d(18px,2px,0) rotate(2deg) scale(1.02)"
+            },
+            {
+                transform:
+                    "translate3d(8px,8px,0) rotate(-4deg) scale(1)"
+            },
+            {
+                transform:
+                    "translate3d(0,0,0) rotate(-2deg) scale(1)"
+            }
+        ],
+        {
+            duration: 1600,
+            easing: "ease-in-out"
+        }
+    );
 
+    await wait(1600);
 }
 
 
 /* ======================================================
-   MOSCA SE SACUDE
+   MOSCA: SE ACERCA A LA MIERDA
+====================================================== */
+
+async function moveFlyToPoop() {
+
+    /*
+       La mosca NO va directamente.
+       Hace un recorrido curvado.
+    */
+
+    fly.style.right =
+        isMobile() ? "16%" : "18%";
+
+    fly.style.bottom =
+        isMobile() ? "36%" : "37%";
+
+    fly.style.transform =
+        "translate3d(0,-8px,0) rotate(-4deg) scale(1.02)";
+
+    await wait(900);
+
+    /*
+       Segundo movimiento: baja hacia la mierda.
+    */
+
+    fly.style.right =
+        isMobile() ? "8%" : "9%";
+
+    fly.style.bottom =
+        isMobile() ? "28%" : "29%";
+
+    fly.style.transform =
+        "translate3d(0,0,0) rotate(5deg) scale(1)";
+
+    await wait(1100);
+
+    /*
+       Se queda flotando cerca de ella.
+    */
+
+    fly.animate(
+        [
+            {
+                transform:
+                    "translate3d(0,0,0) rotate(4deg)"
+            },
+            {
+                transform:
+                    "translate3d(-7px,-9px,0) rotate(-4deg)"
+            },
+            {
+                transform:
+                    "translate3d(5px,-3px,0) rotate(5deg)"
+            },
+            {
+                transform:
+                    "translate3d(0,0,0) rotate(4deg)"
+            }
+        ],
+        {
+            duration: 900,
+            iterations: 2,
+            easing: "ease-in-out"
+        }
+    );
+
+    await wait(1800);
+}
+
+
+/* ======================================================
+   MOSCA: MOVIMIENTO DE CURIOSIDAD
 ====================================================== */
 
 function shakeFly() {
 
     fly.animate(
-
         [
-
             {
                 transform:
-                    "translateX(0) rotate(0)"
+                    "translate3d(0,0,0) rotate(3deg)"
             },
-
             {
                 transform:
-                    "translateX(-15px) rotate(-8deg)"
+                    "translate3d(-6px,-4px,0) rotate(-5deg)"
             },
-
             {
                 transform:
-                    "translateX(15px) rotate(8deg)"
+                    "translate3d(7px,-7px,0) rotate(7deg)"
             },
-
             {
                 transform:
-                    "translateX(-8px) rotate(-4deg)"
+                    "translate3d(-4px,2px,0) rotate(-3deg)"
             },
-
             {
                 transform:
-                    "translateX(0) rotate(0)"
+                    "translate3d(0,0,0) rotate(3deg)"
             }
-
         ],
-
         {
-            duration:
-                800,
-
-            easing:
-                "cubic-bezier(.2,.8,.2,1)"
+            duration: 1000,
+            easing: "ease-in-out"
         }
-
     );
-
 }
 
 
@@ -460,26 +586,22 @@ function shakeFly() {
 function showBubbles() {
 
     const bubbles =
-        document.querySelectorAll(
-            ".bubble"
-        );
+        document.querySelectorAll(".bubble");
 
     bubbles.forEach(
-        bubble => {
+        (bubble, index) => {
 
-            bubble.classList.remove(
-                "active"
-            );
+            bubble.classList.remove("active");
 
             void bubble.offsetWidth;
 
-            bubble.classList.add(
-                "active"
-            );
+            setTimeout(() => {
 
+                bubble.classList.add("active");
+
+            }, index * 180);
         }
     );
-
 }
 
 
@@ -487,206 +609,186 @@ function showBubbles() {
    MOSCA HUYE
 ====================================================== */
 
-function flyAway() {
+async function flyAway() {
+
+    fly.getAnimations().forEach(
+        animation => animation.cancel()
+    );
 
     fly.animate(
-
         [
-
             {
                 transform:
-                    "translate(0,0) scale(1)"
+                    "translate3d(0,0,0) scale(1) rotate(4deg)"
             },
-
             {
                 transform:
-                    "translate(100px,-100px) scale(.7)"
+                    "translate3d(-30px,-50px,0) scale(1.05) rotate(-10deg)"
             },
-
             {
                 transform:
-                    "translate(450px,-350px) scale(.1)"
+                    "translate3d(90px,-130px,0) scale(.75) rotate(12deg)"
+            },
+            {
+                transform:
+                    "translate3d(300px,-280px,0) scale(.3) rotate(20deg)"
+            },
+            {
+                transform:
+                    "translate3d(650px,-500px,0) scale(.05) rotate(30deg)"
             }
-
         ],
-
         {
-
-            duration:
-                1500,
-
-            easing:
-                "cubic-bezier(.1,.8,.2,1)"
-
+            duration: 1900,
+            easing: "cubic-bezier(.1,.8,.2,1)",
+            fill: "forwards"
         }
-
     );
 
+    await wait(1900);
 }
 
 
 /* ======================================================
-   ABEJA VUELA
+   ABEJA SE VA A TRABAJAR
 ====================================================== */
 
-function beeLeave() {
+async function beeLeave() {
 
-    bee.animate(
-
-        [
-
-            {
-                transform:
-                    "translate(0,0) rotate(0)"
-            },
-
-            {
-                transform:
-                    "translate(100px,-40px) rotate(10deg)"
-            },
-
-            {
-                transform:
-                    "translate(500px,-250px) rotate(15deg)"
-            }
-
-        ],
-
-        {
-
-            duration:
-                1800,
-
-            easing:
-                "cubic-bezier(.2,.8,.2,1)"
-
-        }
-
+    bee.getAnimations().forEach(
+        animation => animation.cancel()
     );
 
+    bee.animate(
+        [
+            {
+                transform:
+                    "translate3d(0,0,0) rotate(-2deg) scale(1)"
+            },
+            {
+                transform:
+                    "translate3d(-10px,-30px,0) rotate(-7deg) scale(1.02)"
+            },
+            {
+                transform:
+                    "translate3d(80px,-70px,0) rotate(8deg) scale(1)"
+            },
+            {
+                transform:
+                    "translate3d(260px,-170px,0) rotate(12deg) scale(.85)"
+            },
+            {
+                transform:
+                    "translate3d(520px,-300px,0) rotate(18deg) scale(.5)"
+            }
+        ],
+        {
+            duration: 2100,
+            easing: "cubic-bezier(.2,.8,.2,1)",
+            fill: "forwards"
+        }
+    );
+
+    await wait(2100);
 }
 
 
 /* ======================================================
-   FLASH
+   FLASH CINEMATOGRÁFICO
 ====================================================== */
 
 function flash() {
 
-    const flash =
+    const flashElement =
         document.createElement("div");
 
-    flash.style.position =
-        "absolute";
+    flashElement.style.position = "absolute";
+    flashElement.style.inset = "0";
+    flashElement.style.zIndex = "500";
+    flashElement.style.background = "white";
+    flashElement.style.pointerEvents = "none";
 
-    flash.style.inset =
-        "0";
+    movie.appendChild(flashElement);
 
-    flash.style.zIndex =
-        "500";
-
-    flash.style.background =
-        "white";
-
-    flash.style.pointerEvents =
-        "none";
-
-    movie.appendChild(
-        flash
-    );
-
-    flash.animate(
-
+    flashElement.animate(
         [
             {
                 opacity: 0
             },
-
             {
-                opacity: .7
+                opacity: .65
             },
-
             {
                 opacity: 0
             }
-
         ],
-
         {
-            duration:
-                600
+            duration: 650,
+            easing: "ease-out"
         }
-
     );
 
     setTimeout(
-        () => flash.remove(),
+        () => flashElement.remove(),
         700
     );
-
 }
 
 
 /* ======================================================
-   FRASE PRINCIPAL
+   FRASE FINAL
 ====================================================== */
 
 async function showQuote() {
 
     hideSceneText();
 
-    quote.classList.remove(
-        "show"
-    );
+    quote.classList.remove("show");
 
     void quote.offsetWidth;
 
-    quote.classList.add(
-        "show"
-    );
+    quote.classList.add("show");
 
     beep(
         500,
-        .15,
+        .18,
         "sine",
-        .04
+        .035
     );
 
-    await wait(4500);
-
+    await wait(4800);
 }
 
 
 /* ======================================================
-   PELÍCULA
+   PELÍCULA PRINCIPAL
 ====================================================== */
 
 async function playMovie() {
 
-    if (running) {
-        return;
-    }
+    if (running) return;
 
     running = true;
+
+    const currentToken =
+        ++animationToken;
 
     resetScene();
 
     initAudio();
 
-    intro.classList.add(
-        "hide"
-    );
+    intro.classList.add("hide");
 
-    movie.classList.add(
-        "active"
-    );
+    movie.classList.add("active");
 
-    await wait(1000);
+    await wait(900);
+
+    if (currentToken !== animationToken) return;
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 1
-    ============================================== */
+    ================================================== */
 
     progress(8);
 
@@ -697,9 +799,9 @@ async function playMovie() {
     await wait(1500);
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 2
-    ============================================== */
+    ================================================== */
 
     progress(18);
 
@@ -710,14 +812,20 @@ async function playMovie() {
     beeSound();
 
     bee.style.left =
-        "25%";
+        isMobile() ? "18%" : "25%";
+
+    bee.style.bottom =
+        isMobile() ? "47%" : "48%";
+
+    bee.style.transform =
+        "translate3d(0,-4px,0) rotate(-2deg)";
 
     await wait(1700);
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 3
-    ============================================== */
+    ================================================== */
 
     progress(28);
 
@@ -725,26 +833,24 @@ async function playMovie() {
         "🐝 Tiene algo mejor que hacer..."
     );
 
-    await wait(1200);
+    await wait(1100);
 
     await showSceneText(
         "🍯 ...que perder el tiempo."
     );
 
-    moveBeeToHoney();
+    await wait(800);
 
-    await wait(1700);
+    await moveBeeToHoney();
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 4
-    ============================================== */
+    ================================================== */
 
     progress(40);
 
-    honey.classList.add(
-        "show"
-    );
+    honey.classList.add("show");
 
     flash();
 
@@ -752,19 +858,23 @@ async function playMovie() {
         650,
         .25,
         "sine",
-        .05
+        .045
     );
 
     await showSceneText(
         "🍯 Crear algo bueno."
     );
 
-    await wait(1700);
+    await wait(900);
+
+    await beeInspectHoney();
+
+    await wait(500);
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 5
-    ============================================== */
+    ================================================== */
 
     progress(50);
 
@@ -774,20 +884,16 @@ async function playMovie() {
 
     await wait(900);
 
-    moveFlyCloser();
-
-    await wait(1600);
+    await moveFlyToPoop();
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 6
-    ============================================== */
+    ================================================== */
 
     progress(60);
 
-    poop.classList.add(
-        "show"
-    );
+    poop.classList.add("show");
 
     showBubbles();
 
@@ -795,21 +901,23 @@ async function playMovie() {
         160,
         .3,
         "square",
-        .04
+        .035
     );
 
     await showSceneText(
         "💩 Muy orgullosa de lo suyo."
     );
 
+    await wait(600);
+
     shakeFly();
 
-    await wait(1800);
+    await wait(1200);
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 7
-    ============================================== */
+    ================================================== */
 
     progress(68);
 
@@ -817,101 +925,99 @@ async function playMovie() {
         "🪰 La mosca quiere discutir."
     );
 
-    await wait(1400);
+    shakeFly();
+
+    await wait(1300);
 
     await showSceneText(
         "🐝 Pero la abeja no pierde su tiempo."
     );
 
-    await wait(1600);
+    await wait(1500);
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 8
-    ============================================== */
+    ================================================== */
 
     progress(76);
 
-    flyAway();
+    await flyAway();
 
     beep(
         220,
         .2,
         "square",
-        .03
+        .025
     );
 
     await showSceneText(
         "💨 La mosca se va."
     );
 
-    await wait(1500);
+    await wait(1300);
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 9
-    ============================================== */
+    ================================================== */
 
     progress(82);
 
-    beeLeave();
+    await beeLeave();
 
     await showSceneText(
         "🐝 La abeja continúa con su trabajo."
     );
 
-    await wait(1600);
+    await wait(1500);
 
 
-    /* ==============================================
+    /* ==================================================
        ESCENA 10
-       FRASE
-    ============================================== */
+    ================================================== */
 
     progress(90);
 
     await showQuote();
 
-    await wait(800);
+    await wait(700);
 
 
-    /* ==============================================
+    /* ==================================================
        FINAL
-    ============================================== */
+    ================================================== */
 
     progress(100);
 
-    quote.classList.remove(
-        "show"
-    );
+    quote.classList.remove("show");
 
     flash();
 
-    await wait(500);
+    await wait(550);
 
-    ending.classList.add(
-        "show"
-    );
+    ending.classList.add("show");
 
     beep(
         520,
         .2,
         "sine",
-        .05
+        .045
     );
 
     running = false;
-
 }
 
 
 /* ======================================================
-   BOTÓN INICIAR
+   INICIAR
 ====================================================== */
 
 startBtn.addEventListener(
     "click",
     () => {
+
+        initAudio();
 
         playMovie();
 
@@ -927,18 +1033,22 @@ replayBtn.addEventListener(
     "click",
     async () => {
 
-        if (running) {
-            return;
-        }
+        if (running) return;
 
-        ending.classList.remove(
-            "show"
-        );
+        ending.classList.remove("show");
 
-        await wait(800);
+        await wait(500);
+
+        /*
+           En móvil volvemos a colocar todo
+           correctamente antes de comenzar.
+        */
+
+        resetScene();
+
+        await wait(150);
 
         playMovie();
-
     }
 );
 
@@ -965,11 +1075,11 @@ soundBtn.addEventListener(
 
             beep(
                 500,
-                .1
+                .1,
+                "sine",
+                .03
             );
-
         }
-
     }
 );
 
@@ -982,35 +1092,57 @@ skipBtn.addEventListener(
     "click",
     () => {
 
-        if (!running) {
-            return;
-        }
+        if (!running) return;
+
+        /*
+           Cancelamos la secuencia actual.
+        */
+
+        animationToken++;
 
         running = false;
 
-        progress(100);
+        bee.getAnimations().forEach(
+            animation => animation.cancel()
+        );
+
+        fly.getAnimations().forEach(
+            animation => animation.cancel()
+        );
 
         hideSceneText();
 
-        quote.classList.remove(
-            "show"
-        );
+        quote.classList.remove("show");
 
-        ending.classList.add(
-            "show"
-        );
+        progress(100);
 
+        ending.classList.add("show");
+
+        beep(
+            520,
+            .15,
+            "sine",
+            .03
+        );
     }
 );
 
 
 /* ======================================================
-   PARALLAX CON EL RATÓN
+   PARALLAX PC
 ====================================================== */
 
 movie.addEventListener(
     "mousemove",
     event => {
+
+        /*
+           En móvil no usamos mousemove.
+        */
+
+        if (isMobile()) return;
+
+        if (!sun) return;
 
         const x =
             event.clientX /
@@ -1022,39 +1154,33 @@ movie.addEventListener(
             window.innerHeight -
             .5;
 
-        const sun =
-            document.querySelector(
-                ".sun"
-            );
-
-        sun.style.marginLeft =
-            `${x * 15}px`;
-
-        sun.style.marginTop =
-            `${y * 10}px`;
-
+        sun.style.transform =
+            `translate3d(
+                ${x * 15}px,
+                ${y * 10}px,
+                0
+            ) scale(1.03)`;
     }
 );
 
 
 /* ======================================================
-   PARALLAX EN MÓVIL
+   PARALLAX CELULAR
 ====================================================== */
 
 window.addEventListener(
     "deviceorientation",
     event => {
 
-        if (!movie.classList.contains(
-            "active"
-        )) {
+        if (
+            !movie.classList.contains("active")
+        ) {
             return;
         }
 
-        const sun =
-            document.querySelector(
-                ".sun"
-            );
+        if (!isMobile()) return;
+
+        if (!sun) return;
 
         const x =
             (event.gamma || 0) / 45;
@@ -1062,11 +1188,61 @@ window.addEventListener(
         const y =
             (event.beta || 0) / 90;
 
-        sun.style.marginLeft =
-            `${x * 15}px`;
+        sun.style.transform =
+            `translate3d(
+                ${x * 10}px,
+                ${y * 7}px,
+                0
+            ) scale(1.03)`;
+    },
+    {
+        passive: true
+    }
+);
 
-        sun.style.marginTop =
-            `${y * 10}px`;
+
+/* ======================================================
+   ORIENTACIÓN DE PANTALLA
+====================================================== */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        /*
+           Regeneramos menos partículas
+           en móvil si cambia el tamaño.
+        */
+
+        createParticles();
 
     }
 );
+
+
+/* ======================================================
+   EVITAR DOBLE TOQUE ACCIDENTAL
+====================================================== */
+
+[startBtn, replayBtn, soundBtn, skipBtn]
+    .forEach(button => {
+
+        if (!button) return;
+
+        button.addEventListener(
+            "touchend",
+            event => {
+
+                /*
+                   Evita que algunos celulares
+                   disparen dos veces el botón.
+                */
+
+                event.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
+    });
+
